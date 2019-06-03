@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:background="@drawable/app_background_gradient"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="30dp"
+        tools:context=".CreateAccount">
+
+
+    <EditText android:layout_width="150dp"
+              android:layout_height="50dp"
+              android:hint="Name..."
+              android:paddingHorizontal="10dp"
+              android:id="@+id/editTextName"
+              android:textColor="@color/black"
+              android:textSize="20dp"
+              android:layout_marginTop="30dp"
+              android:background="@drawable/edittext_background"
+    />
+
+    <EditText android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:hint="Email..."
+              android:paddingHorizontal="10dp"
+              android:id="@+id/editTextEmailCreate"
+              android:layout_below="@+id/editTextName"
+              android:textColor="@color/black"
+              android:textSize="20dp"
+              android:layout_marginTop="30dp"
+              android:background="@drawable/edittext_background"
+    />
+
+
+    <EditText android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:hint="Email..."
+              android:paddingHorizontal="10dp"
+              android:id="@+id/editTextUsername"
+              android:layout_below="@+id/editTextName"
+              android:textColor="@color/black"
+              android:textSize="20dp"
+              android:layout_marginTop="30dp"
+              android:background="@drawable/edittext_background"
+    />
+
+
+
+</RelativeLayout>
