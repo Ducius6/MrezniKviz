@@ -5,6 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/app_background_gradient"
         tools:context=".InvitePeopleActivity">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -13,13 +14,15 @@
                   android:layout_marginTop="40dp"
                   android:weightSum="100" >
 
-        <EditText android:layout_width="5dp" android:layout_height="wrap_content"
+        <EditText android:layout_width="5dp" android:layout_height="50dp"
                   android:hint="Enter users username"
+                  android:background="@drawable/edittext_background"
                   android:layout_weight="80"
                   android:id="@+id/editTextInviteUser"/>
 
         <Button android:layout_width="5dp" android:layout_height="wrap_content"
                 android:layout_weight="20"
+                android:background="@drawable/button_background"
                 android:id="@+id/inviteButton"
                 android:text="Invite"/>
 
@@ -38,6 +41,7 @@
     <Button android:layout_width="match_parent" android:layout_height="60dp"
             android:id="@+id/startNewQuiz"
             android:text="Start Quiz"
+            android:background="@drawable/button_background"
             android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

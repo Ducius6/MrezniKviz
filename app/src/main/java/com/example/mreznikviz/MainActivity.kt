@@ -59,6 +59,4 @@ class MyAdapter(var list: List<User>) : RecyclerView.Adapter<MyAdapter.MyViewHol
         var usernameTextView: TextView = customView.findViewById(R.id.textViewUsername)
         var scoreTextView: TextView = customView.findViewById(R.id.textViewScore)
     }
-
-
 }
