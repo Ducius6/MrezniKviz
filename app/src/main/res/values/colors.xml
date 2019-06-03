@@ -6,4 +6,5 @@
     <color name="white">#FFF</color>
     <color name="black">#000</color>
     <color name="primaryHighlight">#04B4AE</color>
+    <color name="warning_red">#B40404</color>
 </resources>
