@@ -1,5 +1,6 @@
 package com.example.mreznikviz
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -9,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.mreznikviz.entities.User
+
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,6 +36,8 @@ class MainActivity : AppCompatActivity() {
             layoutManager = viewManager
             adapter = viewAdapter
         }
+
+        createNewQuizzButton.setOnClickListener { startActivity(Intent(this, InvitePeopleActivity::class.java)) }
     }
 }
 
@@ -59,6 +64,4 @@ class MyAdapter(var list: List<User>) : RecyclerView.Adapter<MyAdapter.MyViewHol
         var usernameTextView: TextView = customView.findViewById(R.id.textViewUsername)
         var scoreTextView: TextView = customView.findViewById(R.id.textViewScore)
     }
-
-
 }
