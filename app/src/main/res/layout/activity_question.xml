@@ -18,15 +18,11 @@
               android:layout_marginHorizontal="30dp"
     />
 
-    <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
-    android:src="@drawable/move-to-next"
-    />
-
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorPrimaryDark"
-                    android:paddingVertical="10dp"
-                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="15dp"
+                    android:paddingHorizontal="15dp"
                     android:layout_alignParentBottom="true"
     >
         <EditText android:layout_width="match_parent"
@@ -45,13 +41,14 @@
         <RelativeLayout android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:id="@+id/nextButton"
+                        android:padding="6dp"
                         android:layout_alignParentRight="true"
                         android:background="@drawable/button_background"
         >
             <ImageView android:layout_width="match_parent"
                        android:layout_height="match_parent"
                        android:elevation="10dp"
-                        android:src="@drawable/move-to-next"
+                        android:src="@drawable/ic_arrow_next"
             />
         </RelativeLayout>
 
