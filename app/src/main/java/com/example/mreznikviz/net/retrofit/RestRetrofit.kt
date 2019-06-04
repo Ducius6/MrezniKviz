@@ -1,5 +1,6 @@
 package com.example.mreznikviz.net.retrofit
 
+import com.example.mreznikviz.entities.JsonCategory
 import com.example.mreznikviz.entities.Quizz
 import com.example.mreznikviz.net.RestFactory
 import com.example.mreznikviz.net.RestInterface
@@ -7,7 +8,7 @@ import retrofit.RestAdapter
 
 class RestRetrofit : RestInterface {
 
-    override fun getQuizzQuestions(quizzId: Long?): Quizz? {
+    override fun getQuizzQuestions(quizzId: Long?): JsonCategory? {
         return service.getQuizzQuestions(quizzId)
     }
 
