@@ -47,7 +47,6 @@ class CreateAccount : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-
     }
 
     fun displayWarning() {
