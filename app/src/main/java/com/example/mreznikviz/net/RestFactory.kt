@@ -4,7 +4,7 @@ import com.example.mreznikviz.net.retrofit.RestRetrofit
 
 
 object RestFactory {
-    val BASE_IP = "10.0.2.2"
+    val BASE_IP = "jservice.io/api/"
 
     val instance: RestInterface
         get() = RestRetrofit()
