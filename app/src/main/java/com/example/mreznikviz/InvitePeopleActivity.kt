@@ -9,10 +9,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import com.example.mreznikviz.entities.User
 
 class InvitePeopleActivity : AppCompatActivity() {
@@ -42,11 +39,15 @@ class InvitePeopleActivity : AppCompatActivity() {
 
         inviteButton!!.setOnClickListener {
             var username:String = editTextField!!.text.toString()
-            listOfPeople.add(username)
-            myadapter = MyUsernameAdapter(listOfPeople)
-            viewManager = LinearLayoutManager(this)
-            recyclerView!!.layoutManager = viewManager
-            recyclerView!!.adapter = myadapter
+            if(!username.trim().isEmpty()){
+                listOfPeople.add(username)
+                myadapter = MyUsernameAdapter(listOfPeople)
+                viewManager = LinearLayoutManager(this)
+                recyclerView!!.layoutManager = viewManager
+                recyclerView!!.adapter = myadapter
+            }else{
+                Toast.makeText(this,"Please enter username",Toast.LENGTH_SHORT).show()
+            }
         }
 
 
