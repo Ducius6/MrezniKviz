@@ -1,5 +1,6 @@
 package com.example.mreznikviz.net.retrofit
 
+import com.example.mreznikviz.constants.Categories
 import com.example.mreznikviz.net.RestFactory
 import com.example.mreznikviz.net.RestInterface
 import retrofit.RestAdapter
@@ -15,4 +16,5 @@ class RestRetrofit : RestInterface {
             .build()
         service = retrofit.create(RestService::class.java)
     }
+
 }
