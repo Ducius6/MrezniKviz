@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -34,6 +35,7 @@ class CreateAccount : AppCompatActivity() {
         passwordInput = findViewById(R.id.edittextPasswordCreate)
         createButton = findViewById(R.id.createButton)
         warningCreate = findViewById(R.id.warningCreate)
+
 
         createButton?.setOnClickListener {
             if (nameInput?.text.toString().isEmpty()

@@ -21,6 +21,7 @@ class CreateQuiz : AppCompatActivity() {
     private var viewManager: RecyclerView.LayoutManager? = null
     private var myadapter:RecyclerView.Adapter<*>? = null
     private lateinit var listOfPeople: ArrayList<String>
+    private var spinner:Spinner? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,9 +36,14 @@ class CreateQuiz : AppCompatActivity() {
         recyclerView = findViewById(R.id.invitePeopleRecyclerView) as RecyclerView
         inviteButton = findViewById(R.id.inviteButton) as Button
         editTextField = findViewById(R.id.editTextInviteUser) as EditText
+        spinner = findViewById(R.id.categorySpinner) as Spinner
 
         //napunim adapter listom stringova sa usernameovima
         listOfPeople = arrayListOf()
+
+        val items = arrayOf("", "By Rating", "By Crowd", "By Distance")
+        val filterAdapter = ArrayAdapter(this, R.layout.spinner_item, items)
+        spinner!!.setAdapter(filterAdapter)
 
         inviteButton!!.setOnClickListener {
             var username:String = editTextField!!.text.toString()
