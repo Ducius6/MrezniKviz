@@ -31,7 +31,7 @@ class InvitePeopleActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setBackgroundDrawable( ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)))
-
+        supportActionBar?.title = "QuizApp"
 
         recyclerView = findViewById(R.id.invitePeopleRecyclerView) as RecyclerView
         inviteButton = findViewById(R.id.inviteButton) as Button
