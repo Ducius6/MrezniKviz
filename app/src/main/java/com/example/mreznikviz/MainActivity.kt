@@ -1,5 +1,6 @@
 package com.example.mreznikviz
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -53,14 +54,16 @@ class MyAdapter(var list: List<User>) : RecyclerView.Adapter<MyAdapter.MyViewHol
         return list.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, i: Int) {
         val user = list[i]
-        val text = (i + 1).toString() + ". " + user.username
-        holder.usernameTextView.text = text
+        holder.noTextView.text = (i + 1).toString() + "."
+        holder.usernameTextView.text = user.username
         holder.scoreTextView.text = user.score.toString()
     }
 
     class MyViewHolder(customView: View) : RecyclerView.ViewHolder(customView) {
+        var noTextView: TextView = customView.findViewById(R.id.textViewNo)
         var usernameTextView: TextView = customView.findViewById(R.id.textViewUsername)
         var scoreTextView: TextView = customView.findViewById(R.id.textViewScore)
     }
