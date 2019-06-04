@@ -1,7 +1,7 @@
 package com.example.mreznikviz.net
 
-import com.example.mreznikviz.entities.Quizz
+import com.example.mreznikviz.entities.JsonCategory
 
 interface RestInterface {
-    fun getQuizzQuestions(quizzId: Long?): Quizz?
+    fun getQuizzQuestions(quizzId: Long?): JsonCategory?
 }
