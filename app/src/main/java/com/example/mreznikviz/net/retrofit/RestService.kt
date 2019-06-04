@@ -4,6 +4,7 @@ import com.example.mreznikviz.entities.JsonCategory
 import com.example.mreznikviz.entities.Quizz
 import retrofit.http.GET
 import retrofit.http.Path
+import retrofit.http.Query
 
 interface RestService {
 

@@ -3,7 +3,7 @@ package com.example.mreznikviz.net
 import android.os.AsyncTask
 import com.example.mreznikviz.entities.JsonCategory
 
-class QuzzFetcher : AsyncTask<Long?, Void, JsonCategory?>() {
+public class QuizzFetcher : AsyncTask<Long?, Void, JsonCategory?>() {
 
 
     override fun doInBackground(vararg params: Long?): JsonCategory? {

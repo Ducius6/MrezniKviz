@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.example.mreznikviz.constants.Categories
 import com.example.mreznikviz.entities.User
+import com.example.mreznikviz.net.QuizzFetcher
 import kotlinx.android.synthetic.main.activity_invite_people.*
 
 class CreateQuiz : AppCompatActivity() {
@@ -49,7 +50,8 @@ class CreateQuiz : AppCompatActivity() {
         spinner!!.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 if(position == 0){
-
+                    val quizFetcher: QuizzFetcher = QuizzFetcher()
+                    quizFetcher.execute(Categories.POP_MUSIC.id)
                 }
                 else if (position == 1){
 
