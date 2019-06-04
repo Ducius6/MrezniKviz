@@ -51,6 +51,8 @@
     <Button android:layout_width="100dp"
             android:layout_height="50dp"
             android:text="Login"
+            android:textSize="16dp"
+            android:id="@+id/loginButton"
             android:textColor="@color/white"
             android:background="@drawable/button_background"
             android:layout_centerHorizontal="true"
@@ -75,9 +77,25 @@
             android:textColor="@color/white"
             android:background="@drawable/button_background"
             android:layout_alignParentBottom="true"
+            android:textSize="16dp"
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="30dp"
             android:layout_marginBottom="20dp"
+    />
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingVertical="10dp"
+              android:background="@drawable/warning_background"
+              android:text="Account doesn't exist"
+              android:textColor="@color/white"
+              android:textSize="16dp"
+              android:visibility="gone"
+              android:id="@+id/warningLogin"
+              android:paddingHorizontal="15dp"
+              android:layout_below="@id/loginButton"
+              android:layout_marginTop="30dp"
+              android:layout_centerHorizontal="true"
     />
 
 

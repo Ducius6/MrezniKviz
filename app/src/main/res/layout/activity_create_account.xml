@@ -7,6 +7,7 @@
         android:background="@drawable/app_background_gradient"
         android:layout_height="match_parent"
         android:paddingHorizontal="30dp"
+        android:paddingVertical="40dp"
         tools:context=".CreateAccount">
 
 
@@ -17,7 +18,6 @@
               android:id="@+id/editTextName"
               android:textColor="@color/black"
               android:textSize="20dp"
-              android:layout_marginTop="30dp"
               android:background="@drawable/edittext_background"
     />
 
@@ -36,14 +36,54 @@
 
     <EditText android:layout_width="match_parent"
               android:layout_height="50dp"
-              android:hint="Email..."
+              android:hint="Username..."
               android:paddingHorizontal="10dp"
               android:id="@+id/editTextUsername"
-              android:layout_below="@+id/editTextName"
+              android:layout_below="@+id/editTextEmailCreate"
               android:textColor="@color/black"
               android:textSize="20dp"
               android:layout_marginTop="30dp"
               android:background="@drawable/edittext_background"
+    />
+
+    <EditText android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:hint="Password..."
+              android:paddingHorizontal="10dp"
+              android:inputType="textPassword"
+              android:id="@+id/edittextPasswordCreate"
+              android:layout_below="@+id/editTextUsername"
+              android:textColor="@color/black"
+              android:textSize="20dp"
+              android:layout_marginTop="30dp"
+              android:background="@drawable/edittext_background"
+    />
+
+    <Button android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="Create"
+            android:textSize="16dp"
+            android:id="@+id/createButton"
+            android:textColor="@color/white"
+            android:background="@drawable/button_background"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/edittextPasswordCreate"
+    />
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:paddingVertical="10dp"
+              android:background="@drawable/warning_background"
+              android:text="Username taken"
+              android:textColor="@color/white"
+              android:textSize="16dp"
+              android:id="@+id/warningCreate"
+              android:visibility="gone"
+              android:paddingHorizontal="15dp"
+              android:layout_below="@id/createButton"
+              android:layout_marginTop="30dp"
+              android:layout_centerHorizontal="true"
     />
 
 
