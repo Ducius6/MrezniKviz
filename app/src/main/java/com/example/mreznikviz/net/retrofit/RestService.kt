@@ -1,16 +1,13 @@
 package com.example.mreznikviz.net.retrofit
 
-import com.example.mreznikviz.entities.User
+import com.example.mreznikviz.entities.Quizz
 import retrofit.http.GET
-import retrofit.http.PUT
 import retrofit.http.Path
 
 interface RestService {
 
-    @PUT("/users/{id}")
-    fun createNewUser(@Path("id")personId:Long)
+    @GET("/category?id={id}")
+    fun getQuizzQuestions(@Path("id") categoryId: Long?): Quizz?
 
-    @GET("/users/{id}")
-    fun getUser(@Path("id")personId: Long):User
 
 }
