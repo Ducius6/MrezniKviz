@@ -21,8 +21,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".InvitePeopleActivity"></activity>
-
+        <activity android:name=".InvitePeopleActivity"
+                    android:theme="@style/AppThemeInvite"></activity>
     </application>
 
 </manifest>

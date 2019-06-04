@@ -1,10 +1,12 @@
 package com.example.mreznikviz
 
+import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -26,6 +28,11 @@ class InvitePeopleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_invite_people)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setBackgroundDrawable( ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)))
+
+
         recyclerView = findViewById(R.id.invitePeopleRecyclerView) as RecyclerView
         inviteButton = findViewById(R.id.inviteButton) as Button
         editTextField = findViewById(R.id.editTextInviteUser) as EditText
@@ -43,6 +50,14 @@ class InvitePeopleActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // handle arrow click here
+        if (item.itemId == android.R.id.home) {
+            finish() // close this activity and return to preview activity (if there is any)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
 

@@ -5,8 +5,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         android:background="@drawable/app_background_gradient"
         tools:context=".InvitePeopleActivity">
+
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                   android:orientation="horizontal"
@@ -30,7 +32,7 @@
     </LinearLayout>
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="INVITES"
+            android:text="Invites"
               android:textSize="25dp"
               android:layout_below="@id/linear"
               android:textColor="@color/white"
