@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.example.mreznikviz.constants.Categories
 import com.example.mreznikviz.entities.User
 import kotlinx.android.synthetic.main.activity_invite_people.*
 
@@ -41,9 +42,27 @@ class CreateQuiz : AppCompatActivity() {
         //napunim adapter listom stringova sa usernameovima
         listOfPeople = arrayListOf()
 
-        val items = arrayOf("", "By Rating", "By Crowd", "By Distance")
+        val items = arrayOf(Categories.POP_MUSIC.title, Categories.FOUR_LETTER_WORDS.title, Categories.SCIENCE.title)
         val filterAdapter = ArrayAdapter(this, R.layout.spinner_item, items)
         spinner!!.setAdapter(filterAdapter)
+
+        spinner!!.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                if(position == 0){
+
+                }
+                else if (position == 1){
+
+                }
+                else if (position == 2){
+
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                return
+            }
+        })
 
         inviteButton!!.setOnClickListener {
             var username:String = editTextField!!.text.toString()

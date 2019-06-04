@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".InvitePeopleActivity"
+                android:name=".CreateQuiz"
                 android:theme="@style/AppThemeInvite"/>
     </application>
 

@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             adapter = viewAdapter
         }
 
-        createNewQuizzButton.setOnClickListener { startActivity(Intent(this, InvitePeopleActivity::class.java)) }
+        createNewQuizzButton.setOnClickListener { startActivity(Intent(this, CreateQuiz::class.java)) }
     }
 }
 
