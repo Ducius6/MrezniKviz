@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/app_background_gradient"
+        tools:context=".Question">
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="This is a text view for question"
+              android:textColor="@color/white"
+              android:id="@+id/textViewQuestion"
+              android:textSize="30dp"
+              android:layout_marginTop="30dp"
+              android:layout_marginHorizontal="30dp"
+    />
+
+    <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+    android:src="@drawable/move-to-next"
+    />
+
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimaryDark"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_alignParentBottom="true"
+    >
+        <EditText android:layout_width="match_parent"
+                  android:layout_height="50dp"
+                  android:hint="Answer..."
+                  android:textColor="@color/black"
+                  android:id="@+id/editTextAnswer"
+                  android:textSize="20dp"
+                  android:layout_toLeftOf="@+id/nextButton"
+                  android:layout_centerInParent="true"
+                  android:paddingHorizontal="10dp"
+                  android:layout_marginRight="10dp"
+                  android:background="@drawable/edittext_background"
+        />
+
+        <RelativeLayout android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:id="@+id/nextButton"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/button_background"
+        >
+            <ImageView android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:elevation="10dp"
+                        android:src="@drawable/move-to-next"
+            />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
