@@ -14,7 +14,7 @@ import android.widget.*
 import com.example.mreznikviz.entities.User
 import kotlinx.android.synthetic.main.activity_invite_people.*
 
-class InvitePeopleActivity : AppCompatActivity() {
+class CreateQuiz : AppCompatActivity() {
     private var recyclerView:RecyclerView? = null
     private var inviteButton:Button? = null
     private var editTextField:EditText? = null
