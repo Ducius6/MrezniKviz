@@ -1,5 +1,6 @@
 package com.example.mreznikviz
 
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.mreznikviz.entities.User
+import kotlinx.android.synthetic.main.activity_invite_people.*
 
 class InvitePeopleActivity : AppCompatActivity() {
     private var recyclerView:RecyclerView? = null
@@ -50,6 +52,7 @@ class InvitePeopleActivity : AppCompatActivity() {
             }
         }
 
+        startNewQuiz.setOnClickListener { startActivity(Intent(this, WaitingFriendsActivity::class.java)) }
 
     }
 

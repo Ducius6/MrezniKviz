@@ -9,19 +9,20 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
 import com.example.mreznikviz.entities.User
+import kotlinx.android.synthetic.main.activity_waiting_friends.*
 
-import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class WaitingFriendsActivity : AppCompatActivity() {
 
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_waiting_friends)
 
         val myDataSet = listOf(User(1, "Luka", "lkm", "email", "pass",100),
             User(2, "Duje", "ducius", "email", "pass", 20),
@@ -29,24 +30,27 @@ class MainActivity : AppCompatActivity() {
         )
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = MyAdapter(myDataSet)
+        viewAdapter = MyAdapterWaitingFriends(myDataSet)
 
-        recyclerViewLeaderBoard.apply {
+        recyclerVeiwReadyFriends.apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
         }
 
-        createNewQuizzButton.setOnClickListener { startActivity(Intent(this, InvitePeopleActivity::class.java)) }
+        textViewNumberOfFriends.text = myDataSet.size.toString()
+
+        createNewQuizzButton.setOnClickListener { startActivity(Intent(this, Question::class.java)) }
     }
 }
 
-class MyAdapter(private var list: List<User>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+class MyAdapterWaitingFriends(private var list: List<User>) : RecyclerView.Adapter<MyAdapterWaitingFriends.MyViewHolderWaitingFriends>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderWaitingFriends {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_leader_board_element, parent, false) as View
-        return MyViewHolder(view)
+            .inflate(R.layout.layout_friend_is_ready_for_quizz, parent, false) as View
+        return MyViewHolderWaitingFriends(view)
     }
 
     override fun getItemCount(): Int {
@@ -54,16 +58,12 @@ class MyAdapter(private var list: List<User>) : RecyclerView.Adapter<MyAdapter.M
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: MyViewHolder, i: Int) {
+    override fun onBindViewHolder(holder: MyViewHolderWaitingFriends, i: Int) {
         val user = list[i]
-        holder.noTextView.text = (i + 1).toString() + "."
-        holder.usernameTextView.text = user.username
-        holder.scoreTextView.text = user.score.toString()
+        holder.textView.text = user.username
     }
 
-    class MyViewHolder(customView: View) : RecyclerView.ViewHolder(customView) {
-        var noTextView: TextView = customView.findViewById(R.id.textViewNo)
-        var usernameTextView: TextView = customView.findViewById(R.id.textViewUsername)
-        var scoreTextView: TextView = customView.findViewById(R.id.textViewScore)
+    class MyViewHolderWaitingFriends(customView: View) : RecyclerView.ViewHolder(customView) {
+        var textView : TextView = customView.findViewById(R.id.textView)
     }
 }
