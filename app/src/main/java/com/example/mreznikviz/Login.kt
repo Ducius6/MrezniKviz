@@ -20,6 +20,9 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        val actionbar = supportActionBar
+        actionbar!!.title = "Login"
+
         passwordInput = findViewById(R.id.editTextPasswordLogin)
         emailInput = findViewById(R.id.editTextEmailLogin)
         loginButton = findViewById(R.id.loginButton)
@@ -34,6 +37,11 @@ class Login : AppCompatActivity() {
                 val intent = Intent(Login@this, MainActivity::class.java)
                 startActivity(intent)
             }
+        }
+
+        createAccountButton?.setOnClickListener {
+            val intent = Intent(Login@this, CreateAccount::class.java)
+            startActivity(intent)
         }
 
     }
