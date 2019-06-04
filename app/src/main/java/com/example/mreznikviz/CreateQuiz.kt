@@ -1,5 +1,6 @@
 package com.example.mreznikviz
 
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -9,13 +10,11 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import com.example.mreznikviz.entities.User
+import kotlinx.android.synthetic.main.activity_invite_people.*
 
-class InvitePeopleActivity : AppCompatActivity() {
+class CreateQuiz : AppCompatActivity() {
     private var recyclerView:RecyclerView? = null
     private var inviteButton:Button? = null
     private var editTextField:EditText? = null
@@ -42,13 +41,18 @@ class InvitePeopleActivity : AppCompatActivity() {
 
         inviteButton!!.setOnClickListener {
             var username:String = editTextField!!.text.toString()
-            listOfPeople.add(username)
-            myadapter = MyUsernameAdapter(listOfPeople)
-            viewManager = LinearLayoutManager(this)
-            recyclerView!!.layoutManager = viewManager
-            recyclerView!!.adapter = myadapter
+            if(!username.trim().isEmpty()){
+                listOfPeople.add(username)
+                myadapter = MyUsernameAdapter(listOfPeople)
+                viewManager = LinearLayoutManager(this)
+                recyclerView!!.layoutManager = viewManager
+                recyclerView!!.adapter = myadapter
+            }else{
+                Toast.makeText(this,"Please enter username",Toast.LENGTH_SHORT).show()
+            }
         }
 
+        startNewQuiz.setOnClickListener { startActivity(Intent(this, WaitingFriendsActivity::class.java)) }
 
     }
 

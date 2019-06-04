@@ -10,8 +10,10 @@
         tools:context=".InvitePeopleActivity">
 
     <RelativeLayout android:layout_width="match_parent"
-                 android:layout_margin="20dp"
+                 android:layout_margin="16dp"
                  android:layout_height="match_parent">
+
+        
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                       android:orientation="horizontal"
@@ -28,9 +30,10 @@
 
             <Button android:layout_width="5dp" android:layout_height="wrap_content"
                     android:layout_weight="25"
+                    android:textColor="@color/white"
                     android:background="@drawable/button_background"
                     android:id="@+id/inviteButton"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
                     android:text="Invite"/>
 
         </LinearLayout>
@@ -39,7 +42,9 @@
                   android:text="Invites"
                   android:textSize="25dp"
                   android:layout_below="@id/linear"
+                  android:textStyle="bold"
                   android:textColor="@color/white"
+                  android:layout_marginVertical="15dp"
                   android:id="@+id/invites"
                   android:layout_centerHorizontal="true"/>
 
@@ -55,9 +60,10 @@
 
         </ScrollView>
 
-        <Button android:layout_width="match_parent" android:layout_height="60dp"
+        <Button android:layout_width="match_parent" android:layout_height="50dp"
                 android:id="@+id/startNewQuiz"
                 android:text="Start Quiz"
+                android:textColor="@color/white"
                 android:background="@drawable/button_background"
                 android:layout_alignParentBottom="true"/>
 
