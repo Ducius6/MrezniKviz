@@ -16,7 +16,7 @@
                   android:weightSum="100" >
 
         <EditText android:layout_width="5dp" android:layout_height="53dp"
-                  android:hint="Enter users username"
+                  android:hint="Enter username"
                   android:background="@drawable/edittext_background"
                   android:layout_weight="80"
                   android:id="@+id/editTextInviteUser"/>
