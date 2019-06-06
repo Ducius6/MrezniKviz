@@ -3,7 +3,7 @@ package com.example.mreznikviz
 import android.animation.ValueAnimator
 import android.view.View
 
-class BounceAnimation @JvmOverloads constructor(private val view: View, private val amplitude: Double = 1.0) {
+class Bounce @JvmOverloads constructor(private val view: View, private val amplitude: Double = 1.0) {
 
     fun execute() {
         val valueAnimator = ValueAnimator.ofInt(1, 628)

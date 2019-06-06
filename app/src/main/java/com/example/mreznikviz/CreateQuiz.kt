@@ -2,8 +2,8 @@ package com.example.mreznikviz
 
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.example.mreznikviz.entities.User
+import com.example.mreznikviz.constants.Categories
 import kotlinx.android.synthetic.main.activity_invite_people.*
 
 class CreateQuiz : AppCompatActivity() {
@@ -40,10 +40,11 @@ class CreateQuiz : AppCompatActivity() {
 
         //napunim adapter listom stringova sa usernameovima
         listOfPeople = arrayListOf()
-
-        val items = arrayOf("", "By Rating", "By Crowd", "By Distance")
+        val pomoc = arrayOf(Categories.POP_MUSIC.id, Categories.FOUR_LETTER_WORDS.id,Categories.SCIENCE.id)
+        val items = arrayOf(Categories.POP_MUSIC.title, Categories.FOUR_LETTER_WORDS.title, Categories.SCIENCE.title)
         val filterAdapter = ArrayAdapter(this, R.layout.spinner_item, items)
         spinner!!.setAdapter(filterAdapter)
+
 
         inviteButton!!.setOnClickListener {
             var username:String = editTextField!!.text.toString()
@@ -58,7 +59,12 @@ class CreateQuiz : AppCompatActivity() {
             }
         }
 
-        startNewQuiz.setOnClickListener { startActivity(Intent(this, WaitingFriendsActivity::class.java)) }
+
+
+        startNewQuiz.setOnClickListener {
+            var intent: Intent = Intent(this, WaitingFriendsActivity::class.java).putExtra("categoryId", pomoc[spinner!!.selectedItemPosition])
+            startActivity(intent)
+        }
 
     }
 
