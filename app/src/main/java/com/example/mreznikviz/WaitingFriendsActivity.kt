@@ -11,7 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import com.example.mreznikviz.entities.JsonCategory
 import com.example.mreznikviz.entities.User
+import com.example.mreznikviz.net.QuizzFetcher
+import com.example.mreznikviz.net.RestFactory
 import kotlinx.android.synthetic.main.activity_waiting_friends.*
 
 
@@ -23,6 +26,19 @@ class WaitingFriendsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_waiting_friends)
+        createNewQuizzButton.isEnabled = false
+
+
+        val categoryId = intent.getLongExtra("categoryId", 0)
+        var quizzQuestionList: JsonCategory? = null
+
+        //QuizzFetcher().execute(categoryId)
+
+        Thread {
+            var rest = RestFactory.instance
+            quizzQuestionList = rest.getQuizzQuestions(categoryId)
+            runOnUiThread { createNewQuizzButton.isEnabled = true }
+        }.start()
 
         val myDataSet = listOf(User(1, "Luka", "lkm", "email", "pass",100),
             User(2, "Duje", "ducius", "email", "pass", 20),
@@ -40,7 +56,9 @@ class WaitingFriendsActivity : AppCompatActivity() {
 
         textViewNumberOfFriends.text = myDataSet.size.toString()
 
-        createNewQuizzButton.setOnClickListener { startActivity(Intent(this, Question::class.java)) }
+        Bounce(textViewNumberOfFriends).execute()
+
+        createNewQuizzButton.setOnClickListener { startActivity(Intent(this, Question::class.java).putExtra("category", quizzQuestionList)) }
     }
 }
 

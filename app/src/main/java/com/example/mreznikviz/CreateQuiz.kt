@@ -41,29 +41,11 @@ class CreateQuiz : AppCompatActivity() {
 
         //napunim adapter listom stringova sa usernameovima
         listOfPeople = arrayListOf()
-
+        val pomoc = arrayOf(Categories.POP_MUSIC.id, Categories.FOUR_LETTER_WORDS.id,Categories.SCIENCE.id)
         val items = arrayOf(Categories.POP_MUSIC.title, Categories.FOUR_LETTER_WORDS.title, Categories.SCIENCE.title)
         val filterAdapter = ArrayAdapter(this, R.layout.spinner_item, items)
         spinner!!.setAdapter(filterAdapter)
 
-        spinner!!.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                if(position == 0){
-                    val quizFetcher: QuizzFetcher = QuizzFetcher()
-                    quizFetcher.execute(Categories.POP_MUSIC.id)
-                }
-                else if (position == 1){
-
-                }
-                else if (position == 2){
-
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                return
-            }
-        })
 
         inviteButton!!.setOnClickListener {
             var username:String = editTextField!!.text.toString()
@@ -78,7 +60,12 @@ class CreateQuiz : AppCompatActivity() {
             }
         }
 
-        startNewQuiz.setOnClickListener { startActivity(Intent(this, WaitingFriendsActivity::class.java)) }
+
+
+        startNewQuiz.setOnClickListener {
+            var intent: Intent = Intent(this, WaitingFriendsActivity::class.java).putExtra("categoryId", pomoc[spinner!!.selectedItemPosition])
+            startActivity(intent)
+        }
 
     }
 

@@ -1,6 +1,7 @@
 package com.example.mreznikviz.net
 
 import android.os.AsyncTask
+import android.util.Log
 import com.example.mreznikviz.entities.JsonCategory
 
 public class QuizzFetcher : AsyncTask<Long?, Void, JsonCategory?>() {
@@ -16,6 +17,7 @@ public class QuizzFetcher : AsyncTask<Long?, Void, JsonCategory?>() {
     }
 
     override fun onPostExecute(result: JsonCategory?) {
-        print(result?.title)
+        print("TITLE" + result?.title)
+        Log.d("TITLE", result?.title)
     }
 }
