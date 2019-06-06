@@ -6,11 +6,10 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.view.MotionEvent
 import android.view.View
-import com.example.mreznikviz.listeners.OnFinishListener
 
 class BounceAnimation(private val view: View) {
 
-    private var onFinishListener: OnFinishListener? = null
+    private var onFinishListener: (()->Unit)? = null
     private var delay = 0
     private var amplitude = 1.0
     private var duration = 750
@@ -25,7 +24,7 @@ class BounceAnimation(private val view: View) {
         return this
     }
 
-    fun addOnFinishListener(onFinishListener: OnFinishListener): BounceAnimation {
+    fun addOnFinishListener(onFinishListener: ()->Unit): BounceAnimation {
         this.onFinishListener = onFinishListener
         return this
     }
@@ -39,7 +38,7 @@ class BounceAnimation(private val view: View) {
     fun enableOnTouchDemand() {
         if (delay != 0) throw NumberFormatException("Delay must not be modified for on touch demand")
         if (duration != 750) throw NumberFormatException("Duration must not be modified for on touch demand")
-        if (onFinishListener == null) onFinishListener = {} as OnFinishListener
+        if (onFinishListener == null) onFinishListener = {}
 
         if (isCreated) throw NullPointerException("Animation already initialized for on touch demand or is running single event")
 
@@ -67,7 +66,7 @@ class BounceAnimation(private val view: View) {
                 }
                 valueAnimator.duration = 500
                 valueAnimator.start()
-                if (event.action == MotionEvent.ACTION_UP) onFinishListener!!.onComplete()
+                if (event.action == MotionEvent.ACTION_UP) onFinishListener!!.invoke()
             }
             true
         }

@@ -1,21 +1,23 @@
 package com.example.mreznikviz
 
 import android.os.AsyncTask
-import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import android.widget.TextView
+import com.example.mreznikviz.animations.BounceAnimation
 import com.example.mreznikviz.entities.JsonCategory
 
-public class QuestionCounter(val progressBar: ProgressBar, val textViewQuestion: TextView, val category: JsonCategory, val button: Button): AsyncTask<Void?, Double?, Void?>(){
+public class QuestionCounter(val progressBar: ProgressBar, val textViewQuestion: TextView, val category: JsonCategory, val button: RelativeLayout): AsyncTask<Void?, Double?, Void?>(){
     var time: Double? = null
     var index: Int = 1
-    var animateProgressBar = AnimateProgressBar()
+
+    override fun onPreExecute() {
+        textViewQuestion.text =  category.clues!![0].question
+        val bounceAnimation = BounceAnimation(button)
+        bounceAnimation.addOnFinishListener{time = 20.0}.enableOnTouchDemand()
+    }
 
     override fun doInBackground(vararg params: Void?): Void? {
-        textViewQuestion.text =  category.clues!![0].question
-        button.setOnClickListener {
-            
-        }
         time = 0.0
         for (i in 1..5) {
             while (time!! < 20.0) {
