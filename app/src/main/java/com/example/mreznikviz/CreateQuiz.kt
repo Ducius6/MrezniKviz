@@ -12,9 +12,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.mreznikviz.constants.Categories
+import com.example.mreznikviz.entities.JsonCategory
+import com.example.mreznikviz.entities.Quizz
 import com.example.mreznikviz.entities.User
 import com.example.mreznikviz.net.QuizzFetcher
+import com.example.mreznikviz.net.RestFactory
 import kotlinx.android.synthetic.main.activity_invite_people.*
+import kotlinx.android.synthetic.main.activity_waiting_friends.*
 
 class CreateQuiz : AppCompatActivity() {
     private var recyclerView:RecyclerView? = null
@@ -64,8 +68,17 @@ class CreateQuiz : AppCompatActivity() {
 
 
         startNewQuiz.setOnClickListener {
-            var intent: Intent = Intent(this, WaitingFriendsActivity::class.java).putExtra("categoryId", pomoc[spinner!!.selectedItemPosition])
-            startActivity(intent)
+            // TODO dodaj LOADING BAR
+            startNewQuiz.isEnabled = false
+            Thread {
+                val rest = RestFactory.instance
+                val quizzQuestionList = rest.getQuizzQuestions(pomoc[spinner!!.selectedItemPosition])!!
+                runOnUiThread {
+                    // TODO prekini LOADING BAR
+                    startActivity(Intent(this, WaitingFriendsActivity::class.java).putExtra("quiz", createQuiz(quizzQuestionList)))
+                }
+            }.start()
+
         }
 
     }
@@ -76,6 +89,11 @@ class CreateQuiz : AppCompatActivity() {
             finish() // close this activity and return to preview activity (if there is any)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun createQuiz(jsonCategory: JsonCategory) : Quizz? {
+        // TODO vrati novostvoreni Quizz
+        return null
     }
 }
 

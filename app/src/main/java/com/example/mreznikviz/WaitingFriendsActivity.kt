@@ -9,44 +9,54 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.TextView
-import com.example.mreznikviz.entities.JsonCategory
+import com.example.mreznikviz.animations.BounceAnimation
+import com.example.mreznikviz.entities.Quizz
 import com.example.mreznikviz.entities.User
-import com.example.mreznikviz.net.QuizzFetcher
-import com.example.mreznikviz.net.RestFactory
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_waiting_friends.*
 
 
 class WaitingFriendsActivity : AppCompatActivity() {
 
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewAdapter: MyAdapterWaitingFriends
     private lateinit var viewManager: RecyclerView.LayoutManager
 
+    private val reference: DatabaseReference = FirebaseDatabase.getInstance().reference
+    private lateinit var quiz: Quizz
+
+    private val QUIZ = "quiz/"
+    private val PARTICIPANTS = "participants/"
+
+    private var myDataSet = mutableListOf<User>()
+
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_waiting_friends)
+
         createNewQuizzButton.isEnabled = false
+        popUpMessage.animate().setDuration(1500).alpha(0f).start();
 
-
-        val categoryId = intent.getLongExtra("categoryId", 0)
-        var quizzQuestionList: JsonCategory? = null
-
-        //QuizzFetcher().execute(categoryId)
-
-        Thread {
-            var rest = RestFactory.instance
-            quizzQuestionList = rest.getQuizzQuestions(categoryId)
-            runOnUiThread { createNewQuizzButton.isEnabled = true }
-        }.start()
-
-        val myDataSet = listOf(User(1, "Luka", "lkm", "email", "pass",100),
-            User(2, "Duje", "ducius", "email", "pass", 20),
-            User(3, "Marin", "mara-legenda", "email", "pass", 25)
-        )
+        val quiz = intent.getSerializableExtra("quiz") as Quizz
+        editTextQuizTitle.text = "New Quiz by " + quiz.users.last { it.id == quiz.admin }.username
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = MyAdapterWaitingFriends(myDataSet)
+
+        // TODO poslati obavijesti ljudima
+
+        // stavljanje listenera na dolazak ljudi u kviz
+        val childEventListener = object : ChildEventListener {
+            override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
+                if (dataSnapshot.value != null) add(dataSnapshot.getValue(User::class.java)!!) }
+            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.value != null) remove(dataSnapshot.getValue(User::class.java)!!) }
+            override fun onChildChanged(d: DataSnapshot, p: String?) {}
+            override fun onChildMoved(d: DataSnapshot, p: String?) {}
+            override fun onCancelled(d: DatabaseError) {}
+        }
+        reference.child(QUIZ + quiz.id + PARTICIPANTS).addChildEventListener(childEventListener);
 
         recyclerVeiwReadyFriends.apply {
             setHasFixedSize(true)
@@ -56,18 +66,35 @@ class WaitingFriendsActivity : AppCompatActivity() {
 
         textViewNumberOfFriends.text = myDataSet.size.toString()
 
-        Bounce(textViewNumberOfFriends).execute()
+        createNewQuizzButton.setOnClickListener {
+            reference.child(QUIZ + quiz.id + PARTICIPANTS).removeEventListener(childEventListener)
+            createNewQuizzButton.isEnabled = false
+            startActivity(Intent(this, Question::class.java))
+        }
+    }
 
-        createNewQuizzButton.setOnClickListener { startActivity(Intent(this, Question::class.java).putExtra("category", quizzQuestionList)) }
+    fun add(user: User) {
+        createNewQuizzButton.isEnabled = true
+        BounceAnimation(textViewNumberOfFriends).withAmplitude(0.5).executeSingleEvent()
+        viewAdapter.list.add(0, user)
+        viewAdapter.notifyDataSetChanged()
+    }
+
+    fun remove(user: User) {
+        if (viewAdapter.list.size <= 1) createNewQuizzButton.isEnabled = false
+        viewAdapter.list.remove(user)
+        viewAdapter.notifyDataSetChanged()
     }
 }
 
 
-class MyAdapterWaitingFriends(private var list: List<User>) : RecyclerView.Adapter<MyAdapterWaitingFriends.MyViewHolderWaitingFriends>() {
+// ADAPTER
+class MyAdapterWaitingFriends(var list: MutableList<User>) : RecyclerView.Adapter<MyAdapterWaitingFriends.MyViewHolderWaitingFriends>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderWaitingFriends {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.layout_friend_is_ready_for_quizz, parent, false) as View
+        BounceAnimation(view).executeSingleEvent()
         return MyViewHolderWaitingFriends(view)
     }
 
