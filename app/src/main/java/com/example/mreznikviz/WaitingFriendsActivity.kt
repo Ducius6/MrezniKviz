@@ -32,13 +32,12 @@ class WaitingFriendsActivity : AppCompatActivity() {
         val categoryId = intent.getLongExtra("categoryId", 0)
         var quizzQuestionList: JsonCategory? = null
 
-        QuizzFetcher().execute(categoryId)
+        //QuizzFetcher().execute(categoryId)
 
         Thread {
             var rest = RestFactory.instance
             quizzQuestionList = rest.getQuizzQuestions(categoryId)
             runOnUiThread { createNewQuizzButton.isEnabled = true }
-
         }.start()
 
         val myDataSet = listOf(User(1, "Luka", "lkm", "email", "pass",100),
