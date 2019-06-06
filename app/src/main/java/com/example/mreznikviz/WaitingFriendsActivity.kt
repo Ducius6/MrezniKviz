@@ -2,16 +2,18 @@ package com.example.mreznikviz
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
 import com.example.mreznikviz.entities.JsonCategory
 import com.example.mreznikviz.entities.User
+import com.example.mreznikviz.net.QuizzFetcher
 import com.example.mreznikviz.net.RestFactory
 import kotlinx.android.synthetic.main.activity_waiting_friends.*
 
