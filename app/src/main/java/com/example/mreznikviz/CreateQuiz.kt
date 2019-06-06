@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.mreznikviz.constants.Categories
-import com.example.mreznikviz.entities.User
 import com.example.mreznikviz.net.QuizzFetcher
 import kotlinx.android.synthetic.main.activity_invite_people.*
 
