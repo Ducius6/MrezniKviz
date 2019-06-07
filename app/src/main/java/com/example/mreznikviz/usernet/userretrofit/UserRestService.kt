@@ -17,6 +17,4 @@ interface UserRestService {
     @POST("/users/login")
     fun loginUser(@Query("username")username:String, @Query("password")password:String):Boolean
 
-
-
 }

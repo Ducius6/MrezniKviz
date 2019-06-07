@@ -22,13 +22,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val myDataSet = listOf(User( "Luka", "lkm", "email", "pass",100),
-            User( "Duje", "ducius", "email", "pass", 20),
-            User( "Marin", "mara-legenda", "email", "pass", 25)
-        )
+        //val myDataSet =
 
-        viewManager = LinearLayoutManager(this)
-        viewAdapter = MyAdapter(myDataSet)
+        //viewManager = LinearLayoutManager(this)
+        //viewAdapter = MyAdapter(myDataSet)
 
         recyclerViewLeaderBoard.apply {
             setHasFixedSize(true)
