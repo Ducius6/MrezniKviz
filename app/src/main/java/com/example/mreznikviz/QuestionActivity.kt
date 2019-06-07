@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.example.mreznikviz.entities.JsonCategory
 import kotlinx.android.synthetic.main.activity_question.*
 
-class Question : AppCompatActivity() {
+class QuestionActivity : AppCompatActivity() {
 
     var progressBar: ProgressBar? = null
     var counter: QuestionCounter? = null

@@ -12,6 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.mreznikviz.constants.Categories
+import com.example.mreznikviz.entities.Category
+import com.example.mreznikviz.entities.Question
+import com.example.mreznikviz.entities.Quizz
+import com.example.mreznikviz.entities.User
 import kotlinx.android.synthetic.main.activity_invite_people.*
 
 class CreateQuiz : AppCompatActivity() {
@@ -61,7 +65,19 @@ class CreateQuiz : AppCompatActivity() {
 
 
         startNewQuiz.setOnClickListener {
-            var intent: Intent = Intent(this, WaitingFriendsActivity::class.java).putExtra("categoryId", pomoc[spinner!!.selectedItemPosition])
+            lateinit var quiz : Quizz
+            val id = "prvi_id_za_prvi_kviz"
+            val users = listOf(User("Luka", "dsa", "asdas", "dsc", 1),
+                User("Duje", "dass", "ads", "vsfdg", 0),
+                User("Marin", "dfsg", "dfsdgfhg", "sdfdf", -1))
+            val questions = listOf(Question(1, Category(1, "xcx"), "csf", "cxvb"),
+                Question(4, Category(1, "dcv"), "scdvf", "df")
+            )
+            val admin = 1L
+
+            quiz = Quizz(id, users, questions, admin = admin)
+
+            var intent: Intent = Intent(this, WaitingFriendsActivity::class.java).putExtra("quiz", quiz)
             startActivity(intent)
         }
 
