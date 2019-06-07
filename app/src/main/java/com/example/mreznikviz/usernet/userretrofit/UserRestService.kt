@@ -14,6 +14,9 @@ interface UserRestService {
     @POST("/users")
     fun registerUser(@Body user:User):Response
 
+    @PATCH("/users")
+    fun updateUser(@Query("score")score:Long, @Query("userName")userName:String):Response
+
     @POST("/users/login")
     fun loginUser(@Query("username")username:String, @Query("password")password:String):Boolean
 

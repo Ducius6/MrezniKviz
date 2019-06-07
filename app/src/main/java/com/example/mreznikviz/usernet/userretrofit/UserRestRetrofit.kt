@@ -31,6 +31,10 @@ class UserRestRetrofit:UserRestInterface {
         return service.findAll(from,size)
     }
 
+    override fun updateUser(score: Long, userName: String): Response {
+        return service.updateUser(score,userName)
+    }
+
 
     override fun loginUser(username: String, password: String): Boolean {
         return service.loginUser(username,password)

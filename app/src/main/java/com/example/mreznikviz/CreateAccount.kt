@@ -46,8 +46,6 @@ class CreateAccount : AppCompatActivity() {
             ) {
                 displayWarning()
             } else {
-                System.out.println(nameInput?.text.toString()+usernameInput?.text.toString()+emailInput?.text.toString()+passwordInput?.text.toString())
-                Log.d("proba","else ulazak")
                 val user = User(nameInput!!.text.toString(),usernameInput!!.text.toString(),emailInput!!.text.toString(),passwordInput!!.text.toString(), 0 )
                 CreateNewUser().execute(user)
             }
@@ -66,11 +64,8 @@ class CreateAccount : AppCompatActivity() {
 
     private inner class CreateNewUser: AsyncTask<User, Void, Boolean?>() {
         override fun doInBackground(vararg params: User): Boolean? {
-            Log.d("prov","usa")
-            System.out.println("user "+ params[0].firstName + params[0].userName + params[0].email + params[0].password)
             val rest = UserRestFactory.instance
             try {
-                Log.d("prov","usa")
                 rest.registerUser(params[0])
                 return true;
             }catch (ex:Exception){
