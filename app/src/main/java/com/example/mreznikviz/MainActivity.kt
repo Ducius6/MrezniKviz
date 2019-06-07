@@ -2,15 +2,19 @@ package com.example.mreznikviz
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.example.mreznikviz.entities.User
+import com.example.mreznikviz.usernet.UserRestFactory
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -21,20 +25,25 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Thread{
+            val rest = UserRestFactory.instance
+            var listaUsera:List<User> = rest.findAll(0, 10)
 
-        //val myDataSet =
+            runOnUiThread{
+                viewManager = LinearLayoutManager(this@MainActivity)
+                viewAdapter = MyAdapter(listaUsera)
+                recyclerViewLeaderBoard.apply {
+                    setHasFixedSize(true)
+                    layoutManager = viewManager
+                    adapter = viewAdapter
+                }
 
-        //viewManager = LinearLayoutManager(this)
-        //viewAdapter = MyAdapter(myDataSet)
-
-        recyclerViewLeaderBoard.apply {
-            setHasFixedSize(true)
-            layoutManager = viewManager
-            adapter = viewAdapter
-        }
+            }
+        }.start()
 
         createNewQuizzButton.setOnClickListener { startActivity(Intent(this, CreateQuiz::class.java)) }
     }
+
 }
 
 class MyAdapter(private var list: List<User>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
@@ -62,4 +71,5 @@ class MyAdapter(private var list: List<User>) : RecyclerView.Adapter<MyAdapter.M
         var usernameTextView: TextView = customView.findViewById(R.id.textViewUsername)
         var scoreTextView: TextView = customView.findViewById(R.id.textViewScore)
     }
+
 }

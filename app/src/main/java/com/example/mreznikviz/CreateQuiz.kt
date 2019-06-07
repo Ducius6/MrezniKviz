@@ -51,7 +51,6 @@ class CreateQuiz : AppCompatActivity() {
             if(!username.trim().isEmpty()){
                 listOfPeople.add(username)
                 myadapter = MyUsernameAdapter(listOfPeople)
-                viewManager = LinearLayoutManager(this)
                 recyclerView!!.layoutManager = viewManager
                 recyclerView!!.adapter = myadapter
             }else{
