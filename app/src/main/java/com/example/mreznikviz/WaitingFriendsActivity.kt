@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.mreznikviz.animations.BounceAnimation
+import com.example.mreznikviz.entities.FBUser
 import com.example.mreznikviz.entities.Quizz
 import com.example.mreznikviz.entities.User
 import com.google.firebase.database.ChildEventListener
@@ -31,8 +32,9 @@ class WaitingFriendsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_waiting_friends)
         createNewQuizzButton.isEnabled = false
+        createNewQuizzButton.alpha = 0.5f
 
-        val myDataSet: MutableList<User> = mutableListOf()
+        val myDataSet: MutableList<FBUser> = mutableListOf()
         viewManager = LinearLayoutManager(this)
         viewAdapter = MyAdapterWaitingFriends(myDataSet)
 
@@ -42,9 +44,9 @@ class WaitingFriendsActivity : AppCompatActivity() {
 
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                addToList(p0.getValue(User::class.java)!!) }
+                addToList(p0.getValue(FBUser::class.java)!!) }
             override fun onChildRemoved(p0: DataSnapshot) {
-                removeFromList(p0.getValue(User::class.java)!!) }
+                removeFromList(p0.getValue(FBUser::class.java)!!) }
             override fun onCancelled(p0: DatabaseError) {}
             override fun onChildMoved(p0: DataSnapshot, p1: String?) {}
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {}
@@ -62,31 +64,43 @@ class WaitingFriendsActivity : AppCompatActivity() {
         createNewQuizzButton.setOnClickListener {
             reference.child("quiz/" + quiz.id).removeEventListener(childEventListener)
             createNewQuizzButton.isEnabled = false
-            startActivity(Intent(this, Question::class.java).putExtra("questions", quiz))
+            createNewQuizzButton.alpha = 0.5f
+            startActivity(Intent(this, QuestionActivity::class.java).putExtra("questions", quiz))
         }
+        BounceAnimation(createNewQuizzButton).withAmplitude(0.4).enableOnTouchDemand()
     }
 
-    fun addToList(user: User) {
+    fun addToList(user: FBUser) {
         createNewQuizzButton.isEnabled = true
+        createNewQuizzButton.alpha = 1f
+        textViewNumberOfFriends.text = (textViewNumberOfFriends.text.toString().toInt() + 1).toString()
         BounceAnimation(textViewNumberOfFriends).executeSingleEvent()
         viewAdapter.list.add(0, user)
         viewAdapter.notifyDataSetChanged()
     }
 
-    fun removeFromList(user: User) {
-        if (viewAdapter.list.size <= 1) createNewQuizzButton.isEnabled = false
+    fun removeFromList(user: FBUser) {
+        if (viewAdapter.list.size <= 1) {
+            createNewQuizzButton.isEnabled = false
+            createNewQuizzButton.alpha = 0.5f
+        }
+        textViewNumberOfFriends.text = (textViewNumberOfFriends.text.toString().toInt() - 1).toString()
+        BounceAnimation(textViewNumberOfFriends).withAmplitude(-0.5).executeSingleEvent()
         viewAdapter.list.remove(user)
         viewAdapter.notifyDataSetChanged()
     }
 }
 
 
-class MyAdapterWaitingFriends(var list: MutableList<User>) : RecyclerView.Adapter<MyAdapterWaitingFriends.MyViewHolderWaitingFriends>() {
+class MyAdapterWaitingFriends(var list: MutableList<FBUser>) : RecyclerView.Adapter<MyAdapterWaitingFriends.MyViewHolderWaitingFriends>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderWaitingFriends {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.layout_friend_is_ready_for_quizz, parent, false) as View
-        BounceAnimation(view).executeSingleEvent()
+        if (parent.childCount == 0)
+            BounceAnimation(view).executeSingleEvent()
+        else
+            BounceAnimation(parent.getChildAt(0)).executeSingleEvent()
         return MyViewHolderWaitingFriends(view)
     }
 
