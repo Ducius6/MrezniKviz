@@ -13,20 +13,33 @@
               android:text="This is a text view for question"
               android:textColor="@color/white"
               android:id="@+id/textViewQuestion"
-              android:textSize="30dp"
+              android:textSize="25dp"
               android:layout_marginTop="30dp"
               android:layout_marginHorizontal="30dp"
     />
 
+    <ProgressBar android:layout_width="match_parent"
+                 android:layout_height="4dp"
+                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                 android:id="@+id/progressBarQuestion"
+                 android:progress="10"
+                 android:progressTint="@color/white"
+                 android:layout_above="@+id/answerBox"
+    />
+
+
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/colorPrimaryDark"
-                    android:paddingVertical="15dp"
+                    android:paddingVertical="10dp"
+                    android:id="@+id/answerBox"
                     android:paddingHorizontal="15dp"
                     android:layout_alignParentBottom="true"
     >
+
+
         <EditText android:layout_width="match_parent"
-                  android:layout_height="50dp"
+                  android:layout_height="40dp"
                   android:hint="Answer..."
                   android:textColor="@color/black"
                   android:id="@+id/editTextAnswer"
@@ -38,8 +51,9 @@
                   android:background="@drawable/edittext_background"
         />
 
-        <RelativeLayout android:layout_width="50dp"
-                        android:layout_height="50dp"
+
+        <RelativeLayout android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:id="@+id/nextButton"
                         android:padding="6dp"
                         android:layout_alignParentRight="true"

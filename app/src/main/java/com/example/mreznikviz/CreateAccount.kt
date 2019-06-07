@@ -10,8 +10,6 @@ import android.view.View
 import android.widget.*
 import com.example.mreznikviz.entities.User
 import com.example.mreznikviz.usernet.UserRestFactory
-import org.springframework.http.ResponseEntity
-import java.lang.Exception
 
 class CreateAccount : AppCompatActivity() {
 
