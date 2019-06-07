@@ -1,6 +1,6 @@
-package com.example.mreznikviz.net
+package com.example.mreznikviz.quiznet
 
-import com.example.mreznikviz.net.retrofit.RestRetrofit
+import com.example.mreznikviz.quiznet.quizretrofit.RestRetrofit
 
 
 object RestFactory {

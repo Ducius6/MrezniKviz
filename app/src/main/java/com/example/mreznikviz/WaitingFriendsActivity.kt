@@ -9,12 +9,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.TextView
 import com.example.mreznikviz.entities.JsonCategory
 import com.example.mreznikviz.entities.User
-import com.example.mreznikviz.net.QuizzFetcher
-import com.example.mreznikviz.net.RestFactory
+import com.example.mreznikviz.quiznet.RestFactory
 import kotlinx.android.synthetic.main.activity_waiting_friends.*
 
 
@@ -40,9 +38,9 @@ class WaitingFriendsActivity : AppCompatActivity() {
             runOnUiThread { createNewQuizzButton.isEnabled = true }
         }.start()
 
-        val myDataSet = listOf(User(1, "Luka", "lkm", "email", "pass",100),
-            User(2, "Duje", "ducius", "email", "pass", 20),
-            User(3, "Marin", "mara-legenda", "email", "pass", 25)
+        val myDataSet = listOf(User( "Luka", "lkm", "email", "pass",0),
+            User( "Duje", "ducius", "email", "pass",  0),
+            User( "Marin", "mara-legenda", "email", "pass", 0)
         )
 
         viewManager = LinearLayoutManager(this)
@@ -78,7 +76,7 @@ class MyAdapterWaitingFriends(private var list: List<User>) : RecyclerView.Adapt
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolderWaitingFriends, i: Int) {
         val user = list[i]
-        holder.textView.text = user.username
+        holder.textView.text = user.userName
     }
 
     class MyViewHolderWaitingFriends(customView: View) : RecyclerView.ViewHolder(customView) {

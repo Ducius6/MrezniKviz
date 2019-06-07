@@ -1,9 +1,8 @@
-package com.example.mreznikviz.net.retrofit
+package com.example.mreznikviz.quiznet.quizretrofit
 
 import com.example.mreznikviz.entities.JsonCategory
-import com.example.mreznikviz.entities.Quizz
-import com.example.mreznikviz.net.RestFactory
-import com.example.mreznikviz.net.RestInterface
+import com.example.mreznikviz.quiznet.RestFactory
+import com.example.mreznikviz.quiznet.RestInterface
 import retrofit.RestAdapter
 
 class RestRetrofit : RestInterface {

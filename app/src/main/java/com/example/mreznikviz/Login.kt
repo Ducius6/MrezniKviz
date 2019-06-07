@@ -1,12 +1,18 @@
 package com.example.mreznikviz
 
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import com.example.mreznikviz.entities.User
+import com.example.mreznikviz.usernet.UserRestFactory
+import java.lang.Exception
 
 class Login : AppCompatActivity() {
     var passwordInput: EditText? = null
@@ -34,8 +40,7 @@ class Login : AppCompatActivity() {
                 displayWarning()
             }
             else{
-                val intent = Intent(Login@this, MainActivity::class.java)
-                startActivity(intent)
+                LoginTask().execute()
             }
         }
 
@@ -49,5 +54,23 @@ class Login : AppCompatActivity() {
     fun displayWarning(){
         warningLogin?.text = "All fields must be filled"
         warningLogin?.visibility = View.VISIBLE
+    }
+
+    private inner class LoginTask: AsyncTask<Void, Void, Boolean?>() {
+        override fun doInBackground(vararg params: Void): Boolean? {
+            val rest = UserRestFactory.instance
+            return rest.loginUser(emailInput?.text.toString(), passwordInput?.text.toString())
+
+        }
+
+        override fun onPostExecute(result: Boolean?) {
+            if(result == true){
+                val intent = Intent(this@Login, MainActivity::class.java)
+                startActivity(intent)
+            }
+            else{
+                Toast.makeText(this@Login, "Wrong password or email", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 }

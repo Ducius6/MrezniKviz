@@ -23,9 +23,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val myDataSet = listOf(User(1, "Luka", "lkm", "email", "pass",100),
-            User(2, "Duje", "ducius", "email", "pass", 20),
-            User(3, "Marin", "mara-legenda", "email", "pass", 25)
+        val myDataSet = listOf(User( "Luka", "lkm", "email", "pass",100),
+            User( "Duje", "ducius", "email", "pass", 20),
+            User( "Marin", "mara-legenda", "email", "pass", 25)
         )
 
         viewManager = LinearLayoutManager(this)
@@ -57,7 +57,7 @@ class MyAdapter(private var list: List<User>) : RecyclerView.Adapter<MyAdapter.M
     override fun onBindViewHolder(holder: MyViewHolder, i: Int) {
         val user = list[i]
         holder.noTextView.text = (i + 1).toString() + "."
-        holder.usernameTextView.text = user.username
+        holder.usernameTextView.text = user.userName
         holder.scoreTextView.text = user.score.toString()
     }
 
