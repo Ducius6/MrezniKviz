@@ -1,4 +1,4 @@
-package com.example.mreznikviz.net.retrofit
+package com.example.mreznikviz.quiznet.quizretrofit
 
 import com.example.mreznikviz.entities.JsonCategory
 import retrofit.http.GET
@@ -8,6 +8,5 @@ interface RestService {
 
     @GET("/category")
     fun getQuizzQuestions(@Query("id") id: Long?): JsonCategory?
-
 
 }

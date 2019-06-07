@@ -12,8 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.mreznikviz.constants.Categories
-import com.example.mreznikviz.entities.User
-import com.example.mreznikviz.net.QuizzFetcher
 import kotlinx.android.synthetic.main.activity_invite_people.*
 
 class CreateQuiz : AppCompatActivity() {
@@ -53,7 +51,6 @@ class CreateQuiz : AppCompatActivity() {
             if(!username.trim().isEmpty()){
                 listOfPeople.add(username)
                 myadapter = MyUsernameAdapter(listOfPeople)
-                viewManager = LinearLayoutManager(this)
                 recyclerView!!.layoutManager = viewManager
                 recyclerView!!.adapter = myadapter
             }else{
