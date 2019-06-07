@@ -40,7 +40,9 @@ class Login : AppCompatActivity() {
                 displayWarning()
             }
             else{
-                LoginTask().execute()
+                val intent = Intent(Login@this, MainActivity::class.java)
+                startActivity(intent)
+                //LoginTask().execute()
             }
         }
 
