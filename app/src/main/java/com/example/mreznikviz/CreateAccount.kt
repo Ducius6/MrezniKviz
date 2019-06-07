@@ -62,25 +62,26 @@ class CreateAccount : AppCompatActivity() {
         return true
     }
 
-    private inner class CreateNewUser: AsyncTask<User, Void, Boolean?>() {
-        override fun doInBackground(vararg params: User): Boolean? {
+    private inner class CreateNewUser: AsyncTask<User, Void, User?>() {
+        override fun doInBackground(vararg params: User): User? {
             val rest = UserRestFactory.instance
             try {
                 rest.registerUser(params[0])
-                return true;
+                return params[0];
             }catch (ex:Exception){
                 ex.printStackTrace()
-                return false;
+                return params[0];
             }
         }
 
-        override fun onPostExecute(result: Boolean?) {
-            if(result == true){
+        override fun onPostExecute(result: User?) {
+            if(result != null){
                 val intent = Intent(this@CreateAccount, MainActivity::class.java)
+                intent.putExtra("user", result)
                 startActivity(intent)
             }
             else{
-                Toast.makeText(this@CreateAccount, "Username aleready taken",Toast.LENGTH_LONG).show()
+                Toast.makeText(this@CreateAccount, "Username already taken",Toast.LENGTH_LONG).show()
             }
         }
     }

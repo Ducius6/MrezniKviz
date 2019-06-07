@@ -12,7 +12,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.mreznikviz.entities.User
 import com.example.mreznikviz.usernet.UserRestFactory
-import java.lang.Exception
 
 class Login : AppCompatActivity() {
     var passwordInput: EditText? = null
@@ -20,6 +19,7 @@ class Login : AppCompatActivity() {
     var loginButton: Button? = null
     var warningLogin: TextView? = null
     var createAccountButton: Button? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,9 +40,21 @@ class Login : AppCompatActivity() {
                 displayWarning()
             }
             else{
-                val intent = Intent(Login@this, MainActivity::class.java)
-                startActivity(intent)
-                //LoginTask().execute()
+                Thread{
+                    val rest = UserRestFactory.instance
+                    val user:User? = rest.loginUser(emailInput?.text.toString(), passwordInput?.text.toString())
+                    Log.d("usernull",user?.userName.toString())
+                    runOnUiThread {
+                        if(user != null){
+                            val intent = Intent(this@Login, MainActivity::class.java)
+                            intent.putExtra("user",user)
+                            startActivity(intent)
+                        }
+                        else{
+                            Toast.makeText(this@Login,"Wrong email or password", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }.start()
             }
         }
 
@@ -58,21 +70,4 @@ class Login : AppCompatActivity() {
         warningLogin?.visibility = View.VISIBLE
     }
 
-    private inner class LoginTask: AsyncTask<Void, Void, Boolean?>() {
-        override fun doInBackground(vararg params: Void): Boolean? {
-            val rest = UserRestFactory.instance
-            return rest.loginUser(emailInput?.text.toString(), passwordInput?.text.toString())
-
-        }
-
-        override fun onPostExecute(result: Boolean?) {
-            if(result == true){
-                val intent = Intent(this@Login, MainActivity::class.java)
-                startActivity(intent)
-            }
-            else{
-                Toast.makeText(this@Login, "Wrong password or email", Toast.LENGTH_LONG).show()
-            }
-        }
-    }
 }

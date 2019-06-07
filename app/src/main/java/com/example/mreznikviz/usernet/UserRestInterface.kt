@@ -8,6 +8,6 @@ import java.util.*
 interface UserRestInterface {
     fun registerUser(user:User):Response
     fun findAll(from:Int, size:Int):List<User>
-    fun loginUser(username:String,password:String):Boolean
+    fun loginUser(email:String,password:String):User
     fun updateUser(score:Long, userName:String):Response
 }

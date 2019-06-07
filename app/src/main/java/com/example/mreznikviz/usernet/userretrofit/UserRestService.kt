@@ -18,6 +18,6 @@ interface UserRestService {
     fun updateUser(@Query("score")score:Long, @Query("userName")userName:String):Response
 
     @POST("/users/login")
-    fun loginUser(@Query("username")username:String, @Query("password")password:String):Boolean
+    fun loginUser(@Query("email")email:String, @Query("password")password:String):User
 
 }
