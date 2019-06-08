@@ -12,20 +12,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.mreznikviz.constants.Categories
-import com.example.mreznikviz.entities.Category
-import com.example.mreznikviz.entities.Question
-import com.example.mreznikviz.entities.Quizz
-import com.example.mreznikviz.entities.User
+import com.example.mreznikviz.entities.*
+import com.example.mreznikviz.quiznet.RestFactory
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_invite_people.*
+import kotlin.random.Random
 
 class CreateQuiz : AppCompatActivity() {
-    private var recyclerView:RecyclerView? = null
-    private var inviteButton:Button? = null
-    private var editTextField:EditText? = null
-    private var viewManager: RecyclerView.LayoutManager? = null
-    private var myadapter:RecyclerView.Adapter<*>? = null
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var inviteButton: Button
+    private lateinit var editTextField: EditText
+    private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var myadapter: MyUsernameAdapter
     private lateinit var listOfPeople: ArrayList<String>
-    private var spinner:Spinner? = null
+    private lateinit var spinner: Spinner
+    private lateinit var user: User
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +35,7 @@ class CreateQuiz : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setBackgroundDrawable( ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)))
+        supportActionBar?.setBackgroundDrawable( ColorDrawable(resources.getColor(R.color.colorPrimaryDark)))
         supportActionBar?.title = "QuizApp"
 
         recyclerView = findViewById(R.id.invitePeopleRecyclerView) as RecyclerView
@@ -42,21 +43,24 @@ class CreateQuiz : AppCompatActivity() {
         editTextField = findViewById(R.id.editTextInviteUser) as EditText
         spinner = findViewById(R.id.categorySpinner) as Spinner
 
+        val user = intent.getSerializableExtra("user") as User
+
         //napunim adapter listom stringova sa usernameovima
         listOfPeople = arrayListOf()
         val pomoc = arrayOf(Categories.POP_MUSIC.id, Categories.FOUR_LETTER_WORDS.id,Categories.SCIENCE.id)
-        val items = arrayOf(Categories.POP_MUSIC.title, Categories.FOUR_LETTER_WORDS.title, Categories.SCIENCE.title)
+        //val items = arrayOf(Categories.POP_MUSIC.title, Categories.FOUR_LETTER_WORDS.title, Categories.SCIENCE.title)
+        val items = arrayOf(Categories.POP_MUSIC, Categories.FOUR_LETTER_WORDS, Categories.SCIENCE)
         val filterAdapter = ArrayAdapter(this, R.layout.spinner_item, items)
-        spinner!!.setAdapter(filterAdapter)
+        spinner.setAdapter(filterAdapter)
 
 
-        inviteButton!!.setOnClickListener {
-            var username:String = editTextField!!.text.toString()
+        inviteButton.setOnClickListener {
+            val username:String = editTextField.text.toString()
             if(!username.trim().isEmpty()){
                 listOfPeople.add(username)
                 myadapter = MyUsernameAdapter(listOfPeople)
-                recyclerView!!.layoutManager = viewManager
-                recyclerView!!.adapter = myadapter
+                recyclerView.layoutManager = viewManager
+                recyclerView.adapter = myadapter
             }else{
                 Toast.makeText(this,"Please enter username",Toast.LENGTH_SHORT).show()
             }
@@ -65,6 +69,7 @@ class CreateQuiz : AppCompatActivity() {
 
 
         startNewQuiz.setOnClickListener {
+            startNewQuiz.isEnabled = false
             lateinit var quiz : Quizz
             val id = "prvi_id_za_prvi_kviz"
             val users = listOf(User("Luka", "dsa", "asdas", "dsc", 1),
@@ -75,11 +80,21 @@ class CreateQuiz : AppCompatActivity() {
             )
             val admin = 1L
 
-            quiz = Quizz(id, users, questions, admin = admin)
 
-            var intent: Intent = Intent(this, WaitingFriendsActivity::class.java).putExtra("quiz", quiz)
-            startActivity(intent)
+
+            Thread {
+                startActivity(Intent(this, WaitingFriendsActivity::class.java).putExtra("quiz", createQuiz()))
+            }.start()
+
+
+
         }
+
+
+
+
+
+
 
     }
 
@@ -90,9 +105,24 @@ class CreateQuiz : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    fun createQuiz() : Quizz {
+        val jsonCategory = RestFactory.instance.getQuizzQuestions((spinner!!.selectedItem as Categories).id)
+        val key = FirebaseDatabase.getInstance().reference.child("quiz/").push().key
+
+        val questions = mutableListOf<Question>()
+        while (questions.size < 5) {
+            val randInt = Random.nextInt(jsonCategory!!.clues!!.size)
+            val question = jsonCategory.clues!![randInt]
+            if (questions.contains(question)) continue
+            questions.add(question)
+        }
+
+        val admin = user.userName
+    }
 }
 
-class MyUsernameAdapter(var list: List<String>) : RecyclerView.Adapter<MyUsernameAdapter.MyInviteViewHolder>() {
+class MyUsernameAdapter(var list: MutableList<String>) : RecyclerView.Adapter<MyUsernameAdapter.MyInviteViewHolder>() {
     override fun onBindViewHolder(holder: MyUsernameAdapter.MyInviteViewHolder, i: Int) {
         val text = list.get(i)
         holder.username.text = text    }

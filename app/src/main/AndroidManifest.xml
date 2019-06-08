@@ -14,7 +14,7 @@
         <activity android:name=".WaitingFriendsActivity">
         </activity>
         <activity
-                android:name=".Question"
+                android:name=".QuestionActivity"
                 android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name=".CreateAccount">

@@ -13,7 +13,6 @@ import android.widget.TextView
 import com.example.mreznikviz.animations.BounceAnimation
 import com.example.mreznikviz.entities.FBUser
 import com.example.mreznikviz.entities.Quizz
-import com.example.mreznikviz.entities.User
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -44,9 +43,9 @@ class WaitingFriendsActivity : AppCompatActivity() {
 
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                addToList(p0.getValue(FBUser::class.java)!!) }
+                addToList(FBUser(p0.key!!)) }
             override fun onChildRemoved(p0: DataSnapshot) {
-                removeFromList(p0.getValue(FBUser::class.java)!!) }
+                removeFromList(FBUser(p0.key!!)) }
             override fun onCancelled(p0: DatabaseError) {}
             override fun onChildMoved(p0: DataSnapshot, p1: String?) {}
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {}
@@ -61,13 +60,12 @@ class WaitingFriendsActivity : AppCompatActivity() {
 
         textViewNumberOfFriends.text = myDataSet.size.toString()
 
-        createNewQuizzButton.setOnClickListener {
+        BounceAnimation(createNewQuizzButton).withAmplitude(0.4).addOnFinishListener {
             reference.child("quiz/" + quiz.id).removeEventListener(childEventListener)
             createNewQuizzButton.isEnabled = false
             createNewQuizzButton.alpha = 0.5f
             startActivity(Intent(this, QuestionActivity::class.java).putExtra("questions", quiz))
-        }
-        BounceAnimation(createNewQuizzButton).withAmplitude(0.4).enableOnTouchDemand()
+        }.enableOnTouchDemand()
     }
 
     fun addToList(user: FBUser) {
