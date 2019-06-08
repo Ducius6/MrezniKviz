@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "687946724861",
+    "firebase_url": "https://mrezni-kviz.firebaseio.com",
+    "project_id": "mrezni-kviz",
+    "storage_bucket": "mrezni-kviz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:687946724861:android:04649ed704eaf8ee",
+        "android_client_info": {
+          "package_name": "com.example.mreznikviz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "687946724861-2eumpq4gnl5cq63d8kto81el82fd2q8t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mreznikviz",
+            "certificate_hash": "8a1b29132041932faeb371372e2191fbb713ce13"
+          }
+        },
+        {
+          "client_id": "687946724861-s4pq8dbp192hhsho5ufofsg8jqho5182.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQNFgfCX9OoVEVdLVjMbxddYj0U08HsxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "687946724861-s4pq8dbp192hhsho5ufofsg8jqho5182.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

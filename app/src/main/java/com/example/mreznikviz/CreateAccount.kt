@@ -2,12 +2,14 @@ package com.example.mreznikviz
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
+import com.example.mreznikviz.entities.User
+import com.example.mreznikviz.usernet.UserRestFactory
 
 class CreateAccount : AppCompatActivity() {
 
@@ -28,11 +30,11 @@ class CreateAccount : AppCompatActivity() {
         actionbar.setDisplayHomeAsUpEnabled(true)
         actionbar.setDisplayHomeAsUpEnabled(true)
 
-        nameInput = findViewById(R.id.editTextName)
-        emailInput = findViewById(R.id.editTextEmailCreate)
-        usernameInput = findViewById(R.id.textViewUsername)
-        passwordInput = findViewById(R.id.edittextPasswordCreate)
-        createButton = findViewById(R.id.createButton)
+        nameInput = findViewById(R.id.editTextName) as EditText
+        emailInput = findViewById(R.id.editTextEmailCreate) as EditText
+        usernameInput = findViewById(R.id.editTextUsername) as EditText
+        passwordInput = findViewById(R.id.edittextPasswordCreate) as EditText
+        createButton = findViewById(R.id.createButton)  as Button
         warningCreate = findViewById(R.id.warningCreate)
 
 
@@ -44,8 +46,8 @@ class CreateAccount : AppCompatActivity() {
             ) {
                 displayWarning()
             } else {
-                val intent = Intent(CreateAccount@ this, MainActivity::class.java)
-                startActivity(intent)
+                val user = User(nameInput!!.text.toString(),usernameInput!!.text.toString(),emailInput!!.text.toString(),passwordInput!!.text.toString(), 0 )
+                CreateNewUser().execute(user)
             }
         }
     }
@@ -58,5 +60,29 @@ class CreateAccount : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    private inner class CreateNewUser: AsyncTask<User, Void, User?>() {
+        override fun doInBackground(vararg params: User): User? {
+            val rest = UserRestFactory.instance
+            try {
+                rest.registerUser(params[0])
+                return params[0];
+            }catch (ex:Exception){
+                ex.printStackTrace()
+                return params[0];
+            }
+        }
+
+        override fun onPostExecute(result: User?) {
+            if(result != null){
+                val intent = Intent(this@CreateAccount, MainActivity::class.java)
+                intent.putExtra("user", result)
+                startActivity(intent)
+            }
+            else{
+                Toast.makeText(this@CreateAccount, "Username already taken",Toast.LENGTH_LONG).show()
+            }
+        }
     }
 }

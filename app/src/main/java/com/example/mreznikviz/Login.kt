@@ -1,12 +1,17 @@
 package com.example.mreznikviz
 
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import com.example.mreznikviz.entities.User
+import com.example.mreznikviz.usernet.UserRestFactory
 
 class Login : AppCompatActivity() {
     var passwordInput: EditText? = null
@@ -14,6 +19,7 @@ class Login : AppCompatActivity() {
     var loginButton: Button? = null
     var warningLogin: TextView? = null
     var createAccountButton: Button? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,8 +40,21 @@ class Login : AppCompatActivity() {
                 displayWarning()
             }
             else{
-                val intent = Intent(Login@this, MainActivity::class.java)
-                startActivity(intent)
+                Thread{
+                    val rest = UserRestFactory.instance
+                    val user:User? = rest.loginUser(emailInput?.text.toString(), passwordInput?.text.toString())
+                    Log.d("usernull",user?.userName.toString())
+                    runOnUiThread {
+                        if(user != null){
+                            val intent = Intent(this@Login, MainActivity::class.java)
+                            intent.putExtra("user",user)
+                            startActivity(intent)
+                        }
+                        else{
+                            Toast.makeText(this@Login,"Wrong email or password", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }.start()
             }
         }
 
@@ -50,4 +69,5 @@ class Login : AppCompatActivity() {
         warningLogin?.text = "All fields must be filled"
         warningLogin?.visibility = View.VISIBLE
     }
+
 }

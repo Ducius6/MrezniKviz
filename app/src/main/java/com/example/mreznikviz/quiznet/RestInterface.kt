@@ -1,4 +1,4 @@
-package com.example.mreznikviz.net
+package com.example.mreznikviz.quiznet
 
 import com.example.mreznikviz.entities.JsonCategory
 
