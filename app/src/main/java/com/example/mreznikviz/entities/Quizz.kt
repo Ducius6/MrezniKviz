@@ -6,5 +6,5 @@ data class Quizz (
     var id: String,
     var users: List<User>,
     var questions: List<Question>,
-    var admin: Long
+    var admin: String
 ) : Serializable
