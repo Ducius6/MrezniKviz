@@ -36,8 +36,8 @@ class UserRestRetrofit:UserRestInterface {
     }
 
 
-    override fun loginUser(email: String, password: String): User {
-        return service.loginUser(email,password)
+    override fun loginUser(userName: String, password: String): User {
+        return service.loginUser(userName,password)
     }
 
 }
