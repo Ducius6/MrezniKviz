@@ -3,10 +3,12 @@ package com.example.mreznikviz
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.DisplayMetrics
+import android.view.View
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.example.mreznikviz.animations.BounceAnimation
 import com.example.mreznikviz.entities.Quizz
 import kotlinx.android.synthetic.main.activity_question.*
 
@@ -33,10 +35,11 @@ class QuestionActivity : AppCompatActivity() {
         val line = raz * 5
 
 
-        progressBar = findViewById(R.id.progressBarQuestion);
+        progressBar = findViewById(R.id.progressBarQuestion)
         progressBar?.progress = 0
 
         button = findViewById(R.id.nextButton)
+        val textCounter = findViewById<TextView>(R.id.startCounter)
 
         val tabOne: RelativeLayout = findViewById(R.id.questionOneTab)
         val tabTwo: RelativeLayout = findViewById(R.id.questionTwoTab)
@@ -59,6 +62,30 @@ class QuestionActivity : AppCompatActivity() {
         textViewQuestion = this.findViewById(R.id.textViewQuestion)
 
         counter = QuestionCounter(progressBar!!, textViewQuestion!!, category, nextButton, listOfTabs, editText)
-        counter?.execute()
+
+        Thread(Runnable {
+            for ( i in 0..3){
+                runOnUiThread {
+                    BounceAnimation(textCounter).executeSingleEvent()
+                    if(i == 3){
+                        textCounter.background = null
+                        textCounter.setTextColor(resources.getColor(R.color.white))
+                        textCounter.text = "START"
+                    }
+                    else{
+                        textCounter.text = (3 - i).toString()
+                    }
+                }
+                Thread.sleep(1000)
+            }
+            runOnUiThread {
+                textCounter.visibility = View.GONE
+
+                textViewQuestion?.alpha = 1f
+
+                counter?.execute()
+            }
+        }).start()
+
     }
 }

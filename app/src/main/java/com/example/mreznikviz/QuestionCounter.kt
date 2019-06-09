@@ -1,6 +1,5 @@
 package com.example.mreznikviz
 
-import android.graphics.Color
 import android.os.AsyncTask
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -61,10 +60,10 @@ class QuestionCounter(val progressBar: ProgressBar, val textViewQuestion: TextVi
 
     private fun evaluateQuestion(index: Int){
         if(category.questions!![index-1].answer.toLowerCase() == editText.text.toString().toLowerCase()){
-            listOfTabs[index-1].setBackgroundColor(Color.GREEN)
+            listOfTabs[index-1].setBackgroundResource(R.drawable.background_green)
         }
         else{
-            listOfTabs[index-1].setBackgroundColor(Color.RED)
+            listOfTabs[index-1].setBackgroundResource(R.drawable.background_red)
         }
     }
 

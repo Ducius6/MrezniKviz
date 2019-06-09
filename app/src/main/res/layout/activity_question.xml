@@ -9,11 +9,11 @@
         tools:context=".QuestionActivity">
 
     <RelativeLayout android:layout_width="match_parent" android:layout_height="3dp" android:layout_marginTop="10dp" android:id="@+id/questionTabLayout">
-        <RelativeLayout android:layout_width="71dp" android:layout_height="match_parent" android:alpha="0.5" android:background="@color/white" android:id="@+id/questionOneTab" android:layout_alignParentLeft="true" android:layout_marginLeft="10dp" android:layout_marginRight="10dp"/>
-        <RelativeLayout android:layout_width="71dp" android:layout_height="match_parent" android:alpha="0.5" android:background="@color/white" android:id="@+id/questionTwoTab" android:layout_toRightOf="@id/questionOneTab" android:layout_marginRight="10dp"/>
-        <RelativeLayout android:layout_width="71dp" android:layout_height="match_parent" android:alpha="0.5" android:background="@color/white" android:id="@+id/questionThreeTab" android:layout_toRightOf="@id/questionTwoTab" android:layout_marginRight="10dp"/>
-        <RelativeLayout android:layout_width="71dp" android:layout_height="match_parent" android:alpha="0.5" android:background="@color/white" android:id="@+id/questionFourTab" android:layout_toRightOf="@id/questionThreeTab" android:layout_marginRight="10dp"/>
-        <RelativeLayout android:layout_width="71dp" android:layout_height="match_parent" android:alpha="0.5" android:background="@color/white" android:id="@+id/questionFiveTab" android:layout_toRightOf="@id/questionFourTab" android:layout_marginRight="10dp"/>
+        <RelativeLayout android:layout_width="71dp" android:layout_height="match_parent" android:alpha="0.5" android:background="@drawable/background_white" android:id="@+id/questionOneTab" android:layout_alignParentLeft="true" android:layout_marginLeft="10dp" android:layout_marginRight="10dp"/>
+        <RelativeLayout android:layout_width="71dp" android:layout_height="match_parent" android:alpha="0.5" android:background="@drawable/background_white" android:id="@+id/questionTwoTab" android:layout_toRightOf="@id/questionOneTab" android:layout_marginRight="10dp"/>
+        <RelativeLayout android:layout_width="71dp" android:layout_height="match_parent" android:alpha="0.5" android:background="@drawable/background_white" android:id="@+id/questionThreeTab" android:layout_toRightOf="@id/questionTwoTab" android:layout_marginRight="10dp"/>
+        <RelativeLayout android:layout_width="71dp" android:layout_height="match_parent" android:alpha="0.5" android:background="@drawable/background_white" android:id="@+id/questionFourTab" android:layout_toRightOf="@id/questionThreeTab" android:layout_marginRight="10dp"/>
+        <RelativeLayout android:layout_width="71dp" android:layout_height="match_parent" android:alpha="0.5" android:background="@drawable/background_white" android:id="@+id/questionFiveTab" android:layout_toRightOf="@id/questionFourTab" android:layout_marginRight="10dp"/>
     </RelativeLayout>
 
     <TextView android:layout_width="match_parent"
@@ -23,8 +23,23 @@
               android:id="@+id/textViewQuestion"
               android:layout_below="@+id/questionTabLayout"
               android:textSize="25dp"
-              android:layout_marginTop="30dp"
+              android:alpha="0"
+              android:layout_marginTop="20dp"
               android:layout_marginHorizontal="30dp"
+    />
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="3"
+              android:background="@drawable/background_counter"
+              android:layout_centerHorizontal="true"
+              android:textColor="@color/colorPrimary"
+              android:paddingHorizontal="22dp"
+              android:paddingVertical="2dp"
+              android:id="@+id/startCounter"
+              android:layout_below="@+id/questionTabLayout"
+              android:textSize="50dp"
+              android:layout_marginTop="20dp"
     />
 
     <ProgressBar android:layout_width="match_parent"

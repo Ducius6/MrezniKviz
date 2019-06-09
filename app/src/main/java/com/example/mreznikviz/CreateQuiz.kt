@@ -11,11 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.mreznikviz.constants.Categories
-import com.example.mreznikviz.entities.*
-import com.example.mreznikviz.quiznet.RestFactory
-import com.google.firebase.database.FirebaseDatabase
+import com.example.mreznikviz.entities.Category
+import com.example.mreznikviz.entities.Question
+import com.example.mreznikviz.entities.Quizz
+import com.example.mreznikviz.entities.User
 import kotlinx.android.synthetic.main.activity_invite_people.*
-import kotlin.random.Random
 
 class CreateQuiz : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
@@ -42,7 +42,7 @@ class CreateQuiz : AppCompatActivity() {
         editTextField = findViewById(R.id.editTextInviteUser) as EditText
         spinner = findViewById(R.id.categorySpinner) as Spinner
 
-        val user = intent.getSerializableExtra("user") as User
+        //val user = intent.getSerializableExtra("user") as User
 
         //napunim adapter listom stringova sa usernameovima
         listOfPeople = arrayListOf()
@@ -69,7 +69,7 @@ class CreateQuiz : AppCompatActivity() {
 
         startNewQuiz.setOnClickListener {
             startNewQuiz.isEnabled = false
-            lateinit var quiz : Quizz
+            var quiz : Quizz
             val id = "prvi_id_za_prvi_kviz"
             val users = listOf(User("Luka", "dsa", "asdas", "dsc", 1),
                 User("Duje", "dass", "ads", "vsfdg", 0),
@@ -83,11 +83,13 @@ class CreateQuiz : AppCompatActivity() {
             )
             val admin = 1L
 
+            quiz = Quizz(id, users, questions, "lla")
 
 
-//            Thread {
-//                startActivity(Intent(this, WaitingFriendsActivity::class.java).putExtra("quiz", createQuiz()))
-//            }.start()
+
+            //Thread {
+                startActivity(Intent(this, WaitingFriendsActivity::class.java).putExtra("quiz", quiz))
+           // }.start()
 
 
 
