@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }
-        }//.start()
+        }.start()
 
         createNewQuizzButton.setOnClickListener {
             startActivity(Intent(this, CreateQuiz::class.java))

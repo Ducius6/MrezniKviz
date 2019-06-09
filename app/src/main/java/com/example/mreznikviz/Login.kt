@@ -42,16 +42,17 @@ class Login : AppCompatActivity() {
             else{
                 Thread{
                     val rest = UserRestFactory.instance
-                    val user:User? = rest.loginUser( userNameInput?.text.toString(), passwordInput?.text.toString())
-                    Log.d("usernull",user?.userName.toString())
-                    runOnUiThread {
-                        if(user != null){
-                            val intent = Intent(this@Login, MainActivity::class.java)
-                            intent.putExtra("user",user)
-                            startActivity(intent)
-                        }
-                        else{
-                            Toast.makeText(this@Login,"Wrong email or password", Toast.LENGTH_LONG).show()
+                    try{
+                        val user:User? = rest.loginUser( userNameInput?.text.toString(), passwordInput?.text.toString())
+                        Log.d("usernull",user?.userName.toString())
+                        val intent = Intent(this@Login, MainActivity::class.java)
+                        intent.putExtra("user",user)
+                        startActivity(intent)
+
+                    }catch (ex:Exception){
+                        ex.printStackTrace()
+                        runOnUiThread {
+                            Toast.makeText(this@Login,"Wrong username or password", Toast.LENGTH_LONG).show()
                         }
                     }
                 }.start()

@@ -82,9 +82,9 @@ class CreateQuiz : AppCompatActivity() {
 
 
 
-            Thread {
-                startActivity(Intent(this, WaitingFriendsActivity::class.java).putExtra("quiz", createQuiz()))
-            }.start()
+//            Thread {
+//                startActivity(Intent(this, WaitingFriendsActivity::class.java).putExtra("quiz", createQuiz()))
+//            }.start()
 
 
 
@@ -106,20 +106,20 @@ class CreateQuiz : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun createQuiz() : Quizz {
-        val jsonCategory = RestFactory.instance.getQuizzQuestions((spinner!!.selectedItem as Categories).id)
-        val key = FirebaseDatabase.getInstance().reference.child("quiz/").push().key
-
-        val questions = mutableListOf<Question>()
-        while (questions.size < 5) {
-            val randInt = Random.nextInt(jsonCategory!!.clues!!.size)
-            val question = jsonCategory.clues!![randInt]
-            if (questions.contains(question)) continue
-            questions.add(question)
-        }
-
-        val admin = user.userName
-    }
+//    fun createQuiz() : Quizz {
+//        val jsonCategory = RestFactory.instance.getQuizzQuestions((spinner!!.selectedItem as Categories).id)
+//        val key = FirebaseDatabase.getInstance().reference.child("quiz/").push().key
+//
+//        val questions = mutableListOf<Question>()
+//        while (questions.size < 5) {
+//            val randInt = Random.nextInt(jsonCategory!!.clues!!.size)
+//            val question = jsonCategory.clues!![randInt]
+//            if (questions.contains(question)) continue
+//            questions.add(question)
+//        }
+//
+//        val admin = user.userName
+//    }
 }
 
 class MyUsernameAdapter(var list: MutableList<String>) : RecyclerView.Adapter<MyUsernameAdapter.MyInviteViewHolder>() {
