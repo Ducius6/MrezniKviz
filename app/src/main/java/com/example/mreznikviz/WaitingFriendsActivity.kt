@@ -2,8 +2,8 @@ package com.example.mreznikviz
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -13,7 +13,6 @@ import android.widget.TextView
 import com.example.mreznikviz.animations.BounceAnimation
 import com.example.mreznikviz.entities.FBUser
 import com.example.mreznikviz.entities.Quizz
-import com.example.mreznikviz.entities.User
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -31,7 +30,7 @@ class WaitingFriendsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_waiting_friends)
-        createNewQuizzButton.isEnabled = false
+        createNewQuizzButton.isEnabled = true
         createNewQuizzButton.alpha = 0.5f
 
         val myDataSet: MutableList<FBUser> = mutableListOf()
@@ -60,14 +59,12 @@ class WaitingFriendsActivity : AppCompatActivity() {
         }
 
         textViewNumberOfFriends.text = myDataSet.size.toString()
-
-        createNewQuizzButton.setOnClickListener {
+        BounceAnimation(createNewQuizzButton).withAmplitude(0.4).addOnFinishListener {
             reference.child("quiz/" + quiz.id).removeEventListener(childEventListener)
-            createNewQuizzButton.isEnabled = false
+            createNewQuizzButton.isEnabled = true
             createNewQuizzButton.alpha = 0.5f
             startActivity(Intent(this, QuestionActivity::class.java).putExtra("questions", quiz))
-        }
-        BounceAnimation(createNewQuizzButton).withAmplitude(0.4).enableOnTouchDemand()
+        }.enableOnTouchDemand()
     }
 
     fun addToList(user: FBUser) {
@@ -81,7 +78,7 @@ class WaitingFriendsActivity : AppCompatActivity() {
 
     fun removeFromList(user: FBUser) {
         if (viewAdapter.list.size <= 1) {
-            createNewQuizzButton.isEnabled = false
+            createNewQuizzButton.isEnabled = true
             createNewQuizzButton.alpha = 0.5f
         }
         textViewNumberOfFriends.text = (textViewNumberOfFriends.text.toString().toInt() - 1).toString()

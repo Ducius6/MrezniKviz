@@ -2,9 +2,8 @@ package com.example.mreznikviz
 
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -70,8 +69,12 @@ class CreateQuiz : AppCompatActivity() {
             val users = listOf(User("Luka", "dsa", "asdas", "dsc", 1),
                 User("Duje", "dass", "ads", "vsfdg", 0),
                 User("Marin", "dfsg", "dfsdgfhg", "sdfdf", -1))
-            val questions = listOf(Question(1, Category(1, "xcx"), "csf", "cxvb"),
-                Question(4, Category(1, "dcv"), "scdvf", "df")
+            val questions = listOf(
+                Question(1, Category(1, "prvo pitanje"), "prvo pitanje", "1"),
+                Question(2, Category(2, "drugo pitaje"), "drugo pitaje", "2"),
+                Question(3, Category(3, "trece pitanje"), "trece pitanje", "3"),
+                Question(4, Category(4, "cetvrto pitanje"), "cetvrto pitanje", "4"),
+                Question(5, Category(5, "peto pitanje"), "peto pitanje", "5")
             )
             val admin = 1L
 
