@@ -6,8 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:background="@drawable/app_background_gradient"
-        tools:context=".InvitePeopleActivity">
+        tools:context=".CreateQuiz">
 
     <RelativeLayout android:layout_width="match_parent"
                  android:layout_margin="16dp"
@@ -17,53 +16,54 @@
                  android:layout_height="wrap_content"
                  android:spinnerMode="dropdown"
                  android:layout_marginTop="20dp"
-                android:id="@+id/categorySpinner"></Spinner>
+                 android:id="@+id/categorySpinner"/>
 
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:id="@+id/linear"
-                      android:layout_marginTop="10dp"
-                      android:layout_below="@id/categorySpinner"
-                      android:weightSum="100" >
+<ScrollView android:layout_width="match_parent" android:layout_height="match_parent"
+            android:layout_below="@id/categorySpinner" android:layout_above="@+id/startNewQuiz">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="Selected people"
+                  android:id="@+id/textViewSelectedPeople"
+                  android:layout_marginTop="20dp"
+                  android:layout_marginStart="20dp"
+                  android:textSize="20dp"
+                  android:textColor="@color/primaryHighlight"
+                  android:textStyle="bold"
 
-            <EditText android:layout_width="5dp" android:layout_height="53dp"
-                      android:hint="Enter username"
-                      android:background="@drawable/edittext_background"
-                      android:layout_weight="75"
-                      android:textAlignment="center"
-                      android:id="@+id/editTextInviteUser"/>
+        />
 
-            <Button android:layout_width="5dp" android:layout_height="wrap_content"
-                    android:layout_weight="25"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_background"
-                    android:id="@+id/inviteButton"
-                    android:layout_marginLeft="10dp"
-                    android:text="Invite"/>
+        <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:id="@+id/addedPeopleRecyclerView"
+                                                android:layout_margin="10dp"
 
-        </LinearLayout>
+        >
+
+        </android.support.v7.widget.RecyclerView>
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:text="Invites"
-                  android:textSize="25dp"
-                  android:layout_below="@id/linear"
+                  android:text="All people"
+                  android:id="@+id/textViewAllPeople"
+                  android:layout_marginTop="20dp"
+                  android:layout_marginStart="20dp"
+                  android:textSize="20dp"
+                  android:textColor="@color/primaryHighlight"
                   android:textStyle="bold"
-                  android:textColor="@color/white"
-                  android:layout_marginVertical="15dp"
-                  android:id="@+id/invites"
-                  android:layout_centerHorizontal="true"/>
+        />
 
-        <ScrollView android:layout_width="match_parent" android:layout_height="match_parent"
-                    android:layout_above="@id/startNewQuiz"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_below="@id/invites">
+        <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:id="@+id/invitePeopleRecyclerView"
+                                                android:layout_margin="10dp"
 
-            <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:id="@+id/invitePeopleRecyclerView"></android.support.v7.widget.RecyclerView>
 
-        </ScrollView>
+        />
+    </LinearLayout>
+
+
+</ScrollView>
+
+
 
         <Button android:layout_width="match_parent" android:layout_height="50dp"
                 android:id="@+id/startNewQuiz"
