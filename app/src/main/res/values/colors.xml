@@ -8,4 +8,5 @@
     <color name="primaryHighlight">#04B4AE</color>
     <color name="warning_red">#B40404</color>
     <color name="greenMedium">#0B615E</color>
+    <color name="correctGreen">#04B404</color>
 </resources>

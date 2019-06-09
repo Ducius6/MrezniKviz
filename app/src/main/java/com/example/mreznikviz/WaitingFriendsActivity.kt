@@ -2,8 +2,8 @@ package com.example.mreznikviz
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -30,7 +30,7 @@ class WaitingFriendsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_waiting_friends)
-        createNewQuizzButton.isEnabled = false
+        createNewQuizzButton.isEnabled = true
         createNewQuizzButton.alpha = 0.5f
 
         val myDataSet: MutableList<FBUser> = mutableListOf()
@@ -43,9 +43,9 @@ class WaitingFriendsActivity : AppCompatActivity() {
 
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                addToList(FBUser(p0.key!!)) }
+                addToList(p0.getValue(FBUser::class.java)!!) }
             override fun onChildRemoved(p0: DataSnapshot) {
-                removeFromList(FBUser(p0.key!!)) }
+                removeFromList(p0.getValue(FBUser::class.java)!!) }
             override fun onCancelled(p0: DatabaseError) {}
             override fun onChildMoved(p0: DataSnapshot, p1: String?) {}
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {}
@@ -59,10 +59,9 @@ class WaitingFriendsActivity : AppCompatActivity() {
         }
 
         textViewNumberOfFriends.text = myDataSet.size.toString()
-
         BounceAnimation(createNewQuizzButton).withAmplitude(0.4).addOnFinishListener {
             reference.child("quiz/" + quiz.id).removeEventListener(childEventListener)
-            createNewQuizzButton.isEnabled = false
+            createNewQuizzButton.isEnabled = true
             createNewQuizzButton.alpha = 0.5f
             startActivity(Intent(this, QuestionActivity::class.java).putExtra("questions", quiz))
         }.enableOnTouchDemand()
@@ -79,7 +78,7 @@ class WaitingFriendsActivity : AppCompatActivity() {
 
     fun removeFromList(user: FBUser) {
         if (viewAdapter.list.size <= 1) {
-            createNewQuizzButton.isEnabled = false
+            createNewQuizzButton.isEnabled = true
             createNewQuizzButton.alpha = 0.5f
         }
         textViewNumberOfFriends.text = (textViewNumberOfFriends.text.toString().toInt() - 1).toString()
