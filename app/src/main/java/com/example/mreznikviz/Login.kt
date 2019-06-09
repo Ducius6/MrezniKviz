@@ -15,7 +15,7 @@ import com.example.mreznikviz.usernet.UserRestFactory
 
 class Login : AppCompatActivity() {
     var passwordInput: EditText? = null
-    var emailInput: EditText? = null
+    var userNameInput: EditText? = null
     var loginButton: Button? = null
     var warningLogin: TextView? = null
     var createAccountButton: Button? = null
@@ -30,28 +30,29 @@ class Login : AppCompatActivity() {
         actionbar!!.title = "Login"
 
         passwordInput = findViewById(R.id.editTextPasswordLogin)
-        emailInput = findViewById(R.id.editTextEmailLogin)
+        userNameInput = findViewById(R.id.editTextUsernameLogin)
         loginButton = findViewById(R.id.loginButton)
         warningLogin = findViewById(R.id.warningLogin)
         createAccountButton = findViewById(R.id.createAccountButton);
 
         loginButton?.setOnClickListener {
-            if(passwordInput?.text.toString().isEmpty() || emailInput?.text.toString().isEmpty()){
+            if(passwordInput?.text.toString().isEmpty() || userNameInput?.text.toString().isEmpty()){
                 displayWarning()
             }
             else{
                 Thread{
                     val rest = UserRestFactory.instance
-                    val user:User? = rest.loginUser(emailInput?.text.toString(), passwordInput?.text.toString())
-                    Log.d("usernull",user?.userName.toString())
-                    runOnUiThread {
-                        if(user != null){
-                            val intent = Intent(this@Login, MainActivity::class.java)
-                            intent.putExtra("user",user)
-                            startActivity(intent)
-                        }
-                        else{
-                            Toast.makeText(this@Login,"Wrong email or password", Toast.LENGTH_LONG).show()
+                    try{
+                        val user:User? = rest.loginUser( userNameInput?.text.toString(), passwordInput?.text.toString())
+                        Log.d("usernull",user?.userName.toString())
+                        val intent = Intent(this@Login, MainActivity::class.java)
+                        intent.putExtra("user",user)
+                        startActivity(intent)
+
+                    }catch (ex:Exception){
+                        ex.printStackTrace()
+                        runOnUiThread {
+                            Toast.makeText(this@Login,"Wrong username or password", Toast.LENGTH_LONG).show()
                         }
                     }
                 }.start()

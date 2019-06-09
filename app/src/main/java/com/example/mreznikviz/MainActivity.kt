@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         Thread{
             val rest = UserRestFactory.instance
             var listaUsera:List<User> = rest.findAll(0, 10)
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }
-        }//.start()
+        }.start()
 
         createNewQuizzButton.setOnClickListener {
             startActivity(Intent(this, CreateQuiz::class.java))

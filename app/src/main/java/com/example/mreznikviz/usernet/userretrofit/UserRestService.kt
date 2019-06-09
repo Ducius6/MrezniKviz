@@ -17,7 +17,7 @@ interface UserRestService {
     @PATCH("/users")
     fun updateUser(@Query("score")score:Long, @Query("userName")userName:String):Response
 
-    @POST("/users/login")
-    fun loginUser(@Query("email")email:String, @Query("password")password:String):User
+    @GET("/users/login")
+    fun loginUser(@Query("userName")userName:String, @Query("password")password:String):User
 
 }

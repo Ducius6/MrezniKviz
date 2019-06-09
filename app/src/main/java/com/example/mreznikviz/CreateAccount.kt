@@ -47,7 +47,20 @@ class CreateAccount : AppCompatActivity() {
                 displayWarning()
             } else {
                 val user = User(nameInput!!.text.toString(),usernameInput!!.text.toString(),emailInput!!.text.toString(),passwordInput!!.text.toString(), 0 )
-                CreateNewUser().execute(user)
+                Thread{
+                    val rest = UserRestFactory.instance
+                    try {
+                        rest.registerUser(user)
+                        val intent = Intent(this@CreateAccount, MainActivity::class.java)
+                        intent.putExtra("user", user)
+                        startActivity(intent)
+                    }catch (ex:Exception){
+                        ex.printStackTrace()
+                        runOnUiThread {
+                            Toast.makeText(this@CreateAccount, "Username already taken",Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }.start()
             }
         }
     }
@@ -60,29 +73,5 @@ class CreateAccount : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
-    }
-
-    private inner class CreateNewUser: AsyncTask<User, Void, User?>() {
-        override fun doInBackground(vararg params: User): User? {
-            val rest = UserRestFactory.instance
-            try {
-                rest.registerUser(params[0])
-                return params[0];
-            }catch (ex:Exception){
-                ex.printStackTrace()
-                return params[0];
-            }
-        }
-
-        override fun onPostExecute(result: User?) {
-            if(result != null){
-                val intent = Intent(this@CreateAccount, MainActivity::class.java)
-                intent.putExtra("user", result)
-                startActivity(intent)
-            }
-            else{
-                Toast.makeText(this@CreateAccount, "Username already taken",Toast.LENGTH_LONG).show()
-            }
-        }
     }
 }

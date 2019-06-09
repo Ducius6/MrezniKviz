@@ -7,4 +7,16 @@ data class Question (
     var category: Category,
     var question: String,
     var answer: String
-) : Serializable
+) : Serializable {
+
+    override fun equals(other: Any?): Boolean {
+        if (other?.javaClass != javaClass) return false
+        other as Question
+        if (id != other.id) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+}

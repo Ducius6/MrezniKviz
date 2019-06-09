@@ -1,7 +1,8 @@
 package com.example.mreznikviz.entities
 
-class FBUser() {
-    var userName: String? = null
+import java.io.Serializable
+
+class FBUser(val userName: String) : Serializable {
 
     override fun equals(other: Any?): Boolean{
         if (other?.javaClass != javaClass) return false
@@ -10,4 +11,7 @@ class FBUser() {
         return true
     }
 
+    override fun hashCode(): Int {
+        return userName.hashCode() ?: 0
+    }
 }
