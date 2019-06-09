@@ -44,7 +44,6 @@ class Login : AppCompatActivity() {
                     val rest = UserRestFactory.instance
                     try{
                         val user:User? = rest.loginUser( userNameInput?.text.toString(), passwordInput?.text.toString())
-                        Log.d("usernull",user?.userName.toString())
                         val intent = Intent(this@Login, MainActivity::class.java)
                         intent.putExtra("user",user)
                         startActivity(intent)
