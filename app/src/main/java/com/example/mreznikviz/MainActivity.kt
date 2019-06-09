@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         }.start()
 
         createNewQuizzButton.setOnClickListener {
-            startActivity(Intent(this, CreateQuiz::class.java))
+            startActivity(Intent(this, CreateQuiz::class.java).putExtra("user", intent.getSerializableExtra("user")))
         }
     }
 

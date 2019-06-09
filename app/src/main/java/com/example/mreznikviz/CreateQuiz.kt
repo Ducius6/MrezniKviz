@@ -6,23 +6,28 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.example.mreznikviz.animations.BounceAnimation
 import com.example.mreznikviz.constants.Categories
 import com.example.mreznikviz.entities.*
 import com.example.mreznikviz.quiznet.RestFactory
 import com.example.mreznikviz.usernet.UserRestFactory
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_invite_people.*
+import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.layout_leader_board_element.view.*
 import kotlin.random.Random
 
 class CreateQuiz : AppCompatActivity() {
     private lateinit var recyclerViewAll: RecyclerView
     private lateinit var recyclerViewSelected : RecyclerView
-    private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var viewManager1: RecyclerView.LayoutManager
+    private lateinit var viewManager2: RecyclerView.LayoutManager
     private lateinit var selectedAdapter: MyAdapterSelected
     private lateinit var allAdapter: MyAdapterAll
     private lateinit var spinner: Spinner
@@ -37,29 +42,32 @@ class CreateQuiz : AppCompatActivity() {
         supportActionBar?.title = "QuizApp"
 
 
-        viewManager = LinearLayoutManager(this)
+        user = intent.getSerializableExtra("user") as User
+
+
+        viewManager1 = LinearLayoutManager(this)
+        viewManager2 = LinearLayoutManager(this)
+
 
         recyclerViewAll = findViewById(R.id.invitePeopleRecyclerView)
         recyclerViewSelected = findViewById(R.id.addedPeopleRecyclerView)
 
         selectedAdapter = MyAdapterSelected(mutableListOf())
-        allAdapter = MyAdapterAll(mutableListOf())
+        allAdapter = MyAdapterAll(mutableListOf(User("","Load more", "", "", 0)), this, user)
+
+        selectedAdapter.allAdapter = allAdapter
+        allAdapter.selectedAdapter = selectedAdapter
 
         recyclerViewAll.apply {
             setHasFixedSize(true)
-            layoutManager = viewManager
+            layoutManager = viewManager1
             adapter = allAdapter
         }
-        recyclerViewAll.apply {
+        recyclerViewSelected.apply {
             setHasFixedSize(true)
-            layoutManager = viewManager
+            layoutManager = viewManager2
             adapter = selectedAdapter
         }
-
-
-        val user = intent.getSerializableExtra("user") as User
-
-
 
         // SPINNER
         spinner = findViewById(R.id.categorySpinner)
@@ -116,7 +124,7 @@ class MyAdapterSelected(var list: MutableList<User>) : RecyclerView.Adapter<MyAd
     var allAdapter : MyAdapterAll? = null
 
     override fun onBindViewHolder(holder: MyAdapterSelected.MyInviteViewHolder, i: Int) {
-        val text = list.get(i).userName
+        val text = list[i].userName
         holder.username.text = text
 
         holder.username.setOnClickListener {
@@ -131,6 +139,7 @@ class MyAdapterSelected(var list: MutableList<User>) : RecyclerView.Adapter<MyAd
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyInviteViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.layout_leader_board_element, parent, false) as View
+        BounceAnimation(view).withAmplitude(0.3).executeSingleEvent()
         return MyInviteViewHolder(view)
     }
 
@@ -144,21 +153,44 @@ class MyAdapterSelected(var list: MutableList<User>) : RecyclerView.Adapter<MyAd
     }
 }
 
-class MyAdapterAll(var list: MutableList<User>) : RecyclerView.Adapter<MyAdapterAll.MyInviteViewHolder>() {
+class MyAdapterAll(var list: MutableList<User>, val activity: CreateQuiz, val user : User) : RecyclerView.Adapter<MyAdapterAll.MyInviteViewHolder>() {
 
     var selectedAdapter: MyAdapterSelected? = null
     var count = 0
 
+    init {
+        Thread {
+            val users = UserRestFactory.instance.findAll(count, 10).toMutableList()
+            users.removeAll { it.userName.equals(user.userName) }
+            count += users.size
+            activity.runOnUiThread {
+                list.addAll(list.size - 1, users)
+                notifyDataSetChanged()
+            }
+        }.start()
+    }
+
+
     override fun onBindViewHolder(holder: MyAdapterAll.MyInviteViewHolder, i: Int) {
-        val text = list.get(i).userName
+        val text = list[i].userName
         holder.username.text = text
+
+
 
         holder.username.setOnClickListener {
             if (i == list.size - 1) {
-                val users = UserRestFactory.instance.findAll(i, 10)
-                count += users.size
-                list.addAll(list.size - 1, users)
-                notifyDataSetChanged()
+                Thread {
+                    val users = UserRestFactory.instance.findAll(count, 10).toMutableList()
+                    users.removeAll { it.userName.equals(user.userName) }
+                    count += users.size
+                    activity.runOnUiThread {
+                        if (users.isEmpty()) {
+                            list[list.size - 1].userName = "All users loaded"
+                        }
+                        list.addAll(list.size - 1, users)
+                        notifyDataSetChanged()
+                    }
+                }.start()
             } else  {
                 selectedAdapter!!.list.add(list[i])
                 selectedAdapter!!.notifyDataSetChanged()
