@@ -1,13 +1,10 @@
 package com.example.mreznikviz.usernet.userretrofit
 
 import com.example.mreznikviz.entities.User
-import com.example.mreznikviz.quiznet.RestFactory
 import com.example.mreznikviz.usernet.UserRestFactory
 import com.example.mreznikviz.usernet.UserRestInterface
-import org.springframework.http.ResponseEntity
 import retrofit.RestAdapter
 import retrofit.client.Response
-import java.util.*
 
 class UserRestRetrofit:UserRestInterface {
 
@@ -35,9 +32,13 @@ class UserRestRetrofit:UserRestInterface {
         return service.updateUser(score,userName)
     }
 
-
     override fun loginUser(userName: String, password: String): User {
         return service.loginUser(userName,password)
     }
+
+    override fun sendNotification(token: String): Response {
+        return service.sendNotification(token)
+    }
+
 
 }

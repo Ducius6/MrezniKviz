@@ -2,23 +2,18 @@ package com.example.mreznikviz
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import com.example.mreznikviz.entities.User
 import com.example.mreznikviz.usernet.UserRestFactory
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -54,17 +49,7 @@ class MainActivity : AppCompatActivity() {
 
 
         // POSTAVLJANJE TOKENA
-        FirebaseDatabase.getInstance().reference.child("tokens").child(user.userName).setValue(/* tu upisati device token */)
-
-        // DOHVACANJE TOKENA
-        val listener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val token = dataSnapshot.value.toString()
-                // ovdje napravi sto zelis s tokenom
-            }
-            override fun onCancelled(databaseError: DatabaseError) {}
-        }
-        FirebaseDatabase.getInstance().reference.child("tokens").child(user.userName).addListenerForSingleValueEvent(listener)
+        FirebaseDatabase.getInstance().reference.child("tokens").child(user.userName).setValue(FirebaseInstanceId.getInstance().token)
 
     }
 
