@@ -2,8 +2,8 @@ package com.example.mreznikviz
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.example.mreznikviz.animations.BounceAnimation
 import com.example.mreznikviz.entities.Question
 import com.example.mreznikviz.entities.Quizz
@@ -27,8 +27,7 @@ class WaitFromNotificationActivity : AppCompatActivity() {
         editTextQuizTitle.text = admin + "'s quiz"
         themeTextView.text = "Theme: " + theme
 
-        // TODO popravi ovo username od usera
-        FirebaseDatabase.getInstance().reference.child("quiz/$quizId/members/USERNAME_OD_USERA").setValue(true)
+        FirebaseDatabase.getInstance().reference.child("quiz/$quizId/members/" + MainActivity.getUser().userName).setValue(true)
 
         BounceAnimation(circleSmaller).withDuration(3300).isRepeatable(true).withAmplitude(0.5).executeSingleEvent()
         BounceAnimation(circleBigger).withDuration(3300).isRepeatable(true).withAmplitude(0.85).withDelay(450).executeSingleEvent()
