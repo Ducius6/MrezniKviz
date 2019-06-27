@@ -56,8 +56,8 @@ class WaitingFriendsActivity : AppCompatActivity() {
 
 
         // upise sve na firebase (admina, temu i pitanja pod idjem kviza)
-        FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/admin").setValue(quiz.admin)
-        FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/theme").setValue(quiz.category)
+        FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/info/admin").setValue(quiz.admin)
+        FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/info/theme").setValue(quiz.category)
         for (i in 1..5) {
             FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/questions/" + i.toString()).setValue(quiz.questions[i-1])
         }

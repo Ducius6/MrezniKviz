@@ -19,7 +19,10 @@ import com.example.mreznikviz.entities.User
 import com.example.mreznikviz.firebase.QuizFirebaseMessagingService.Companion.ACTION_RESPONSE
 import com.example.mreznikviz.usernet.UserRestFactory
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -86,9 +89,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun doJoin(){
-        val intent = Intent(this@MainActivity, WaitingFriendsActivity::class.java)
-        startActivity(intent)
+    fun doJoin(id: String) {
+        val listener = object : ValueEventListener {
+            override fun onDataChange(ds: DataSnapshot) {
+                startActivity(Intent(this@MainActivity, WaitFromNotificationActivity::class.java)
+                    .putExtra("id", ds.child("id").getValue(String::class.java))
+                    .putExtra("admin", ds.child("admin").getValue(String::class.java))
+                    .putExtra("id", id))
+            }
+            override fun onCancelled(p0: DatabaseError) {}
+        }
+        FirebaseDatabase.getInstance().reference.child("quiz/$id/info").addValueEventListener(listener)
     }
 
     companion object dohvat{

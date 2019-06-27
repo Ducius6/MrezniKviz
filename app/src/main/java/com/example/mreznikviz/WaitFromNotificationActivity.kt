@@ -20,9 +20,9 @@ class WaitFromNotificationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wait_from_notification)
 
-        val admin = intent.getSerializableExtra("admin") as String
-        val theme = intent.getSerializableExtra("theme") as String
-        val quizId = intent.getSerializableExtra("id") as String
+        val admin = intent.getStringExtra("admin")
+        val theme = intent.getStringExtra("theme")
+        val quizId = intent.getStringExtra("id")
 
         editTextQuizTitle.text = admin + "'s quiz"
         themeTextView.text = "Theme: " + theme
