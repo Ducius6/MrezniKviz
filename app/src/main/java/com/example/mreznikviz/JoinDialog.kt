@@ -22,6 +22,8 @@ class JoinDialog(context: Context) : Dialog(context), View.OnClickListener {
         setContentView(R.layout.join_dialog_layout)
         join = findViewById(R.id.joinButtonDialog)
         cancel = findViewById(R.id.cancelButtonDialog)
+        join?.setOnClickListener(this)
+        cancel?.setOnClickListener(this)
     }
 
 }
