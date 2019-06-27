@@ -13,9 +13,12 @@ import android.widget.TextView
 import com.example.mreznikviz.animations.BounceAnimation
 import com.example.mreznikviz.entities.FBUser
 import com.example.mreznikviz.entities.Quizz
+import com.example.mreznikviz.entities.User
 import com.example.mreznikviz.usernet.UserRestFactory
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_waiting_friends.*
+import kotlinx.android.synthetic.main.activity_waiting_friends.createNewQuizzButton
 
 
 class WaitingFriendsActivity : AppCompatActivity() {
@@ -41,8 +44,10 @@ class WaitingFriendsActivity : AppCompatActivity() {
             val listener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val token = dataSnapshot.value.toString()
-                    val retrofit = UserRestFactory.instance
-                    retrofit.sendNotification(token)
+                    Thread{
+                        val rest = UserRestFactory.instance
+                        rest.sendNotification(token)
+                    }.start()
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
                     //poslat poruku da je failalo

@@ -34,7 +34,7 @@
                 android:theme="@style/AppThemeInvite">
         </activity>
 
-        <service android:name=".firebase.QuizFirebaseMessagingService">
+        <service android:name=".firebase.QuizFirebaseMessagingService" android:stopWithTask="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
