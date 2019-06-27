@@ -41,6 +41,14 @@ class WaitingFriendsActivity : AppCompatActivity() {
 
         // TODO POSLATI OBAVIJESTI LJUDIMA
 
+
+        // upise sve na firebase (admina, temu i pitanja pod idjem kviza)
+        FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/admin").setValue(quiz.admin)
+        FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/theme").setValue(quiz.questions[0].category.title)
+        for (i in 1..5) {
+            FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/questions/" + i.toString()).setValue(quiz.questions[i-1])
+        }
+
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 addToList(p0.getValue(FBUser::class.java)!!) }
@@ -50,7 +58,7 @@ class WaitingFriendsActivity : AppCompatActivity() {
             override fun onChildMoved(p0: DataSnapshot, p1: String?) {}
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {}
         }
-        reference.child("quiz/" + quiz.id).addChildEventListener(childEventListener)
+        reference.child("quiz/" + (quiz.id) + "/members").addChildEventListener(childEventListener)
 
         recyclerVeiwReadyFriends.apply {
             setHasFixedSize(true)
@@ -63,10 +71,10 @@ class WaitingFriendsActivity : AppCompatActivity() {
             reference.child("quiz/" + quiz.id).removeEventListener(childEventListener)
             createNewQuizzButton.isEnabled = true
             createNewQuizzButton.alpha = 0.5f
+            FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/start").setValue(true)
             startActivity(Intent(this, QuestionActivity::class.java).putExtra("questions", quiz))
         }.enableOnTouchDemand()
 
-        editTextQuizTitle.setOnClickListener { startActivity(Intent(this, WaitFromNotificationActivity::class.java)) }
     }
 
     fun addToList(user: FBUser) {
