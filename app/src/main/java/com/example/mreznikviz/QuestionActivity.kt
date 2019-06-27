@@ -66,7 +66,7 @@ class QuestionActivity : AppCompatActivity() {
         Thread(Runnable {
             for ( i in 0..3){
                 runOnUiThread {
-                    BounceAnimation(textCounter).executeSingleEvent()
+                    BounceAnimation(textCounter).withDuration(400).executeSingleEvent()
                     if(i == 3){
                         textCounter.background = null
                         textCounter.setTextColor(resources.getColor(R.color.white))
