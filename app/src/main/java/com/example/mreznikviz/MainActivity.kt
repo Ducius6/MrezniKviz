@@ -104,6 +104,8 @@ class MainActivity : AppCompatActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             Toast.makeText(this@MainActivity, intent?.getStringExtra("message"), Toast.LENGTH_LONG).show()
             //pushmessage.text = intent?.getStringExtra("message")
+            val dialog = JoinDialog(this@MainActivity)
+            dialog.show()
         }
     }
 
