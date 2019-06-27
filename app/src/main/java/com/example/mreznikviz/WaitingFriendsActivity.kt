@@ -13,10 +13,7 @@ import android.widget.TextView
 import com.example.mreznikviz.animations.BounceAnimation
 import com.example.mreznikviz.entities.FBUser
 import com.example.mreznikviz.entities.Quizz
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_waiting_friends.*
 
 
@@ -39,7 +36,18 @@ class WaitingFriendsActivity : AppCompatActivity() {
 
         val quiz = intent.getSerializableExtra("quiz") as Quizz
 
-        // TODO POSLATI OBAVIJESTI LJUDIMA
+        for(user in quiz.users){
+            val listener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val token = dataSnapshot.value.toString()
+                    //funkcija za slanje notifikacije tokenu
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+                    //poslat poruku da je failalo
+                }
+            }
+            FirebaseDatabase.getInstance().reference.child("tokens").child(user.userName).addListenerForSingleValueEvent(listener)
+        }
 
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
