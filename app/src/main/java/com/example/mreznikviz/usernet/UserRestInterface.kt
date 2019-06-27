@@ -8,5 +8,5 @@ interface UserRestInterface {
     fun findAll(from:Int, size:Int):List<User>
     fun loginUser(userName:String,password:String):User
     fun updateUser(score:Long, userName:String):Response
-    fun sendNotification(token: String): Response
+    fun sendNotification(token: String, quizId:String): Response
 }

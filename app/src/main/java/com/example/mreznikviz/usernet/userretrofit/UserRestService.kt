@@ -19,6 +19,6 @@ interface UserRestService {
     fun loginUser(@Query("userName")userName:String, @Query("password")password:String):User
 
     @GET("/users/sendpushmessage")
-    fun sendNotification(@Query("token")token: String): Response
+    fun sendNotification(@Query("token")token: String, @Query("quizId")quizId:String): Response
 
 }

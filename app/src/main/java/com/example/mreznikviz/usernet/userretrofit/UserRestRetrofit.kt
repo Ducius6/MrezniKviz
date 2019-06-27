@@ -36,8 +36,8 @@ class UserRestRetrofit:UserRestInterface {
         return service.loginUser(userName,password)
     }
 
-    override fun sendNotification(token: String): Response {
-        return service.sendNotification(token)
+    override fun sendNotification(token: String, quizId:String): Response {
+        return service.sendNotification(token,quizId)
     }
 
 

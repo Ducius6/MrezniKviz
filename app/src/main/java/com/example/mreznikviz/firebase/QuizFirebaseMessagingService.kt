@@ -14,7 +14,7 @@ class QuizFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         FirebaseDatabase.getInstance().reference.child("tokens").child(MainActivity.getUser().userName).setValue(
-            FirebaseInstanceId.getInstance().token)
+        token)
         Log.d(TAG, "Refreshed token: $token")
     }
 
