@@ -86,6 +86,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun doJoin(){
+        val intent = Intent(this@MainActivity, WaitingFriendsActivity::class.java)
+        startActivity(intent)
+    }
+
     companion object dohvat{
 
         private var user: User? = null
