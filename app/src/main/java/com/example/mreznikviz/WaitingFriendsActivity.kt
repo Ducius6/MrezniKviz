@@ -13,6 +13,7 @@ import android.widget.TextView
 import com.example.mreznikviz.animations.BounceAnimation
 import com.example.mreznikviz.entities.FBUser
 import com.example.mreznikviz.entities.Quizz
+import com.example.mreznikviz.usernet.UserRestFactory
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_waiting_friends.*
 
@@ -40,7 +41,8 @@ class WaitingFriendsActivity : AppCompatActivity() {
             val listener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val token = dataSnapshot.value.toString()
-                    //funkcija za slanje notifikacije tokenu
+                    val retrofit = UserRestFactory.instance
+                    retrofit.sendNotification(token)
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
                     //poslat poruku da je failalo
