@@ -20,9 +20,9 @@ class WaitFromNotificationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wait_from_notification)
 
-        val admin = intent.getSerializableExtra("admin") as String
-        val theme = intent.getSerializableExtra("theme") as String
-        val quizId = intent.getSerializableExtra("id") as String
+        val admin = intent.getStringExtra("admin")
+        val theme = intent.getStringExtra("theme")
+        val quizId = intent.getStringExtra("id")
 
         editTextQuizTitle.text = admin + "'s quiz"
         themeTextView.text = "Theme: " + theme
@@ -38,9 +38,9 @@ class WaitFromNotificationActivity : AppCompatActivity() {
                     val listener2 = object : ValueEventListener {
                         override fun onDataChange(ds: DataSnapshot) {
                             val questions = mutableListOf<Question>()
-                            ds.children.forEach{questions.add(it.getValue(Question::class.java)!!)}
+                            ds.children.forEach{questions.add(readQuestion(it))}
                             startActivity(Intent(this@WaitFromNotificationActivity, QuestionActivity::class.java)
-                                .putExtra("quiz", Quizz(quizId, listOf(), questions, admin)))
+                                .putExtra("quiz", Quizz(quizId, listOf(), questions, admin, "")))
                             finish()
                         }
                         override fun onCancelled(p0: DatabaseError) {}
@@ -51,5 +51,9 @@ class WaitFromNotificationActivity : AppCompatActivity() {
             override fun onCancelled(databaseError: DatabaseError) {}
         }
         FirebaseDatabase.getInstance().reference.child("quiz/$quizId/start").addValueEventListener(listener)
+    }
+
+    fun readQuestion(ds: DataSnapshot): Question {
+        return Question(ds.child("id").getValue(Long::class.java)!!, ds.child("question").getValue(String::class.java)!!, ds.child("answer").getValue(String::class.java)!!)
     }
 }

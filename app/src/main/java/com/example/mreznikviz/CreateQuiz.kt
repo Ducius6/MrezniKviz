@@ -115,7 +115,7 @@ class CreateQuiz : AppCompatActivity() {
             questions.add(question)
         }
         val admin = user.userName
-        return Quizz(key!!, listOfUsers, questions, admin)
+        return Quizz(key!!, listOfUsers, questions, admin, jsonCategory?.title!!)
     }
 }
 

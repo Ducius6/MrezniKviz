@@ -13,12 +13,9 @@ import android.widget.TextView
 import com.example.mreznikviz.animations.BounceAnimation
 import com.example.mreznikviz.entities.FBUser
 import com.example.mreznikviz.entities.Quizz
-import com.example.mreznikviz.entities.User
 import com.example.mreznikviz.usernet.UserRestFactory
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_waiting_friends.*
-import kotlinx.android.synthetic.main.activity_waiting_friends.createNewQuizzButton
 
 
 class WaitingFriendsActivity : AppCompatActivity() {
@@ -46,7 +43,7 @@ class WaitingFriendsActivity : AppCompatActivity() {
                     val token = dataSnapshot.value.toString()
                     Thread{
                         val rest = UserRestFactory.instance
-                        rest.sendNotification(token,"lala")
+                        rest.sendNotification(token,quiz.id)
                     }.start()
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -58,8 +55,8 @@ class WaitingFriendsActivity : AppCompatActivity() {
 
 
         // upise sve na firebase (admina, temu i pitanja pod idjem kviza)
-        FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/admin").setValue(quiz.admin)
-        FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/theme").setValue("blabla") //todo
+        FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/info/admin").setValue(quiz.admin)
+        FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/info/theme").setValue(quiz.category)
         for (i in 1..5) {
             FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/questions/" + i.toString()).setValue(quiz.questions[i-1])
         }

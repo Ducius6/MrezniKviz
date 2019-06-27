@@ -19,7 +19,10 @@ import com.example.mreznikviz.entities.User
 import com.example.mreznikviz.firebase.QuizFirebaseMessagingService.Companion.ACTION_RESPONSE
 import com.example.mreznikviz.usernet.UserRestFactory
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private var quizId: String? = null
 
     private var user: User? = null
 
@@ -86,9 +90,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun doJoin(){
-        val intent = Intent(this@MainActivity, WaitingFriendsActivity::class.java)
-        startActivity(intent)
+    fun doJoin() {
+        val listener = object : ValueEventListener {
+            override fun onDataChange(ds: DataSnapshot) {
+                startActivity(Intent(this@MainActivity, WaitFromNotificationActivity::class.java)
+                    .putExtra("id", ds.child("id").getValue(String::class.java))
+                    .putExtra("admin", ds.child("admin").getValue(String::class.java))
+                    .putExtra("id", quizId))
+            }
+            override fun onCancelled(p0: DatabaseError) {}
+        }
+        FirebaseDatabase.getInstance().reference.child("quiz/$quizId/info").addValueEventListener(listener)
     }
 
     companion object dohvat{
@@ -103,7 +115,7 @@ class MainActivity : AppCompatActivity() {
     inner class MessageBroadCastReceiver: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             Toast.makeText(this@MainActivity, intent?.getStringExtra("message"), Toast.LENGTH_LONG).show()
-            //pushmessage.text = intent?.getStringExtra("message")
+            quizId = intent?.getStringExtra("quizId")
             val dialog = JoinDialog(this@MainActivity)
             dialog.show()
         }
