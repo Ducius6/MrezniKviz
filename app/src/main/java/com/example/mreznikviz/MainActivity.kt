@@ -15,6 +15,10 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.mreznikviz.entities.User
 import com.example.mreznikviz.usernet.UserRestFactory
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +29,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val user = intent.getSerializableExtra("user") as User
 
         Thread{
             val rest = UserRestFactory.instance
@@ -43,8 +49,23 @@ class MainActivity : AppCompatActivity() {
         }.start()
 
         createNewQuizzButton.setOnClickListener {
-            startActivity(Intent(this, CreateQuiz::class.java).putExtra("user", intent.getSerializableExtra("user")))
+            startActivity(Intent(this, CreateQuiz::class.java).putExtra("user", user))
         }
+
+
+        // POSTAVLJANJE TOKENA
+        FirebaseDatabase.getInstance().reference.child("tokens").child(user.userName).setValue(/* tu upisati device token */)
+
+        // DOHVACANJE TOKENA
+        val listener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val token = dataSnapshot.value.toString()
+                // ovdje napravi sto zelis s tokenom
+            }
+            override fun onCancelled(databaseError: DatabaseError) {}
+        }
+        FirebaseDatabase.getInstance().reference.child("tokens").child(user.userName).addListenerForSingleValueEvent(listener)
+
     }
 
 }

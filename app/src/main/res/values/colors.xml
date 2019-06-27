@@ -9,4 +9,6 @@
     <color name="warning_red">#B40404</color>
     <color name="greenMedium">#0B615E</color>
     <color name="correctGreen">#04B404</color>
+    <color name="lightGreen">#BAFDFB</color>
+    <color name="darkerGreen">#05dad3</color>
 </resources>

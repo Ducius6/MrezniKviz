@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.mreznikviz.entities.User
 import com.example.mreznikviz.usernet.UserRestFactory
+import com.google.firebase.database.FirebaseDatabase
 
 class Login : AppCompatActivity() {
     var passwordInput: EditText? = null
@@ -62,6 +63,7 @@ class Login : AppCompatActivity() {
             val intent = Intent(Login@this, CreateAccount::class.java)
             startActivity(intent)
         }
+
 
     }
 
