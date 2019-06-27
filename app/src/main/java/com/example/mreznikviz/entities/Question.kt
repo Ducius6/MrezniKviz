@@ -18,4 +18,8 @@ data class Question (
     override fun hashCode(): Int {
         return id.hashCode()
     }
+
+    fun toMap() : Map<String, Any> {
+        return mapOf("id" to id, "question" to question, "answer" to answer)
+    }
 }
