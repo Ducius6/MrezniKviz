@@ -46,7 +46,7 @@ class WaitingFriendsActivity : AppCompatActivity() {
                     val token = dataSnapshot.value.toString()
                     Thread{
                         val rest = UserRestFactory.instance
-                        rest.sendNotification(token)
+                        rest.sendNotification(token,"lala")
                     }.start()
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
