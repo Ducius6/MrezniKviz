@@ -2,16 +2,16 @@ package com.example.mreznikviz
 
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 
-class JoinDialog(context: Context) : Dialog(context), DialogInterface.OnClickListener {
+class JoinDialog(context: Context) : Dialog(context), View.OnClickListener {
     var join: Button? = null
     var cancel: Button? = null
 
-    override fun onClick(dialog: DialogInterface?, which: Int) {
-        if(which == R.id.joinButtonDialog){
+    override fun onClick(v: View) {
+        if(v.id == R.id.joinButtonDialog){
             (context as MainActivity).doJoin()
         }
         dismiss()
@@ -23,6 +23,5 @@ class JoinDialog(context: Context) : Dialog(context), DialogInterface.OnClickLis
         join = findViewById(R.id.joinButtonDialog)
         cancel = findViewById(R.id.cancelButtonDialog)
     }
-
 
 }

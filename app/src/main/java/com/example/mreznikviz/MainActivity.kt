@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private var quizId: String? = null
 
     private var user: User? = null
 
@@ -89,17 +90,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun doJoin(id: String) {
+    fun doJoin() {
         val listener = object : ValueEventListener {
             override fun onDataChange(ds: DataSnapshot) {
                 startActivity(Intent(this@MainActivity, WaitFromNotificationActivity::class.java)
                     .putExtra("id", ds.child("id").getValue(String::class.java))
                     .putExtra("admin", ds.child("admin").getValue(String::class.java))
-                    .putExtra("id", id))
+                    .putExtra("id", quizId))
             }
             override fun onCancelled(p0: DatabaseError) {}
         }
-        FirebaseDatabase.getInstance().reference.child("quiz/$id/info").addValueEventListener(listener)
+        FirebaseDatabase.getInstance().reference.child("quiz/$quizId/info").addValueEventListener(listener)
     }
 
     companion object dohvat{
@@ -114,7 +115,7 @@ class MainActivity : AppCompatActivity() {
     inner class MessageBroadCastReceiver: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             Toast.makeText(this@MainActivity, intent?.getStringExtra("message"), Toast.LENGTH_LONG).show()
-            //pushmessage.text = intent?.getStringExtra("message")
+            quizId = intent?.getStringExtra("quizId")
             val dialog = JoinDialog(this@MainActivity)
             dialog.show()
         }
