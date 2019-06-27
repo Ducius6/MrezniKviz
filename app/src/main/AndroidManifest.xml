@@ -20,6 +20,11 @@
         <activity android:name=".CreateAccount">
         </activity>
         <activity android:name=".Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".MainActivity">
 
@@ -27,14 +32,9 @@
         <activity
                 android:name=".CreateQuiz"
                 android:theme="@style/AppThemeInvite">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
-        <service android:name=".firebase.QuizFirebaseMessagingService">
+        <service android:name=".firebase.QuizFirebaseMessagingService" android:stopWithTask="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

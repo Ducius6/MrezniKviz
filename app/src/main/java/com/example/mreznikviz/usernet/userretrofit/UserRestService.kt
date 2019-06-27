@@ -1,10 +1,8 @@
 package com.example.mreznikviz.usernet.userretrofit
 
 import com.example.mreznikviz.entities.User
-import org.springframework.http.ResponseEntity
 import retrofit.client.Response
 import retrofit.http.*
-import java.util.*
 
 interface UserRestService {
 
@@ -19,5 +17,8 @@ interface UserRestService {
 
     @GET("/users/login")
     fun loginUser(@Query("userName")userName:String, @Query("password")password:String):User
+
+    @GET("/users/sendpushmessage")
+    fun sendNotification(@Query("token")token: String, @Query("quizId")quizId:String): Response
 
 }

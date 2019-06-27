@@ -1,8 +1,10 @@
 package com.example.mreznikviz
 
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
-import android.os.AsyncTask
+import android.content.IntentFilter
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -14,11 +16,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.example.mreznikviz.entities.User
+import com.example.mreznikviz.firebase.QuizFirebaseMessagingService.Companion.ACTION_RESPONSE
 import com.example.mreznikviz.usernet.UserRestFactory
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,11 +28,42 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
+    private var user: User? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val user = intent.getSerializableExtra("user") as User
+        user = intent.getSerializableExtra("user") as User
+        dohvat.user = user;
+
+        val broadcastReceiverIntentFilter = IntentFilter(ACTION_RESPONSE).apply {
+            addCategory(Intent.CATEGORY_DEFAULT)
+        }
+        val receiver = MessageBroadCastReceiver()
+        registerReceiver(receiver, broadcastReceiverIntentFilter)
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("failed", "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new Instance ID token
+                val token = task.result?.token
+                FirebaseDatabase.getInstance().reference.child("tokens").child(user!!.userName).setValue(token)
+
+
+                // Log and toast
+                Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+                Log.e("token", token)
+            })
+
+        if (intent.extras != null) {
+            val message = intent.extras?.getString("message")
+            //pushmessage.text = message
+
+        }
 
         Thread{
             val rest = UserRestFactory.instance
@@ -51,21 +84,27 @@ class MainActivity : AppCompatActivity() {
         createNewQuizzButton.setOnClickListener {
             startActivity(Intent(this, CreateQuiz::class.java).putExtra("user", user))
         }
+    }
 
+    fun doJoin(){
+        val intent = Intent(this@MainActivity, WaitingFriendsActivity::class.java)
+        startActivity(intent)
+    }
 
-        // POSTAVLJANJE TOKENA
-        FirebaseDatabase.getInstance().reference.child("tokens").child(user.userName).setValue(/* tu upisati device token */)
+    companion object dohvat{
 
-        // DOHVACANJE TOKENA
-        val listener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val token = dataSnapshot.value.toString()
-                // ovdje napravi sto zelis s tokenom
-            }
-            override fun onCancelled(databaseError: DatabaseError) {}
+        private var user: User? = null
+
+        fun getUser(): User{
+            return user!!
         }
-        FirebaseDatabase.getInstance().reference.child("tokens").child(user.userName).addListenerForSingleValueEvent(listener)
+    }
 
+    inner class MessageBroadCastReceiver: BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            Toast.makeText(this@MainActivity, intent?.getStringExtra("message"), Toast.LENGTH_LONG).show()
+            //pushmessage.text = intent?.getStringExtra("message")
+        }
     }
 
 }

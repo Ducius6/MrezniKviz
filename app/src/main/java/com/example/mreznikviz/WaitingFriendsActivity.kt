@@ -13,11 +13,12 @@ import android.widget.TextView
 import com.example.mreznikviz.animations.BounceAnimation
 import com.example.mreznikviz.entities.FBUser
 import com.example.mreznikviz.entities.Quizz
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.example.mreznikviz.entities.User
+import com.example.mreznikviz.usernet.UserRestFactory
+import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_waiting_friends.*
+import kotlinx.android.synthetic.main.activity_waiting_friends.createNewQuizzButton
 
 
 class WaitingFriendsActivity : AppCompatActivity() {
@@ -39,7 +40,21 @@ class WaitingFriendsActivity : AppCompatActivity() {
 
         val quiz = intent.getSerializableExtra("quiz") as Quizz
 
-        // TODO POSLATI OBAVIJESTI LJUDIMA
+        for(user in quiz.users){
+            val listener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val token = dataSnapshot.value.toString()
+                    Thread{
+                        val rest = UserRestFactory.instance
+                        rest.sendNotification(token)
+                    }.start()
+                }
+                override fun onCancelled(databaseError: DatabaseError) {
+                    //poslat poruku da je failalo
+                }
+            }
+            FirebaseDatabase.getInstance().reference.child("tokens").child(user.userName).addListenerForSingleValueEvent(listener)
+        }
 
 
         // upise sve na firebase (admina, temu i pitanja pod idjem kviza)
