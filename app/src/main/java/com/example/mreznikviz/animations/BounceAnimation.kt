@@ -15,6 +15,7 @@ class BounceAnimation(private val view: View) {
     private var duration = 750
 
     private var isCreated = false
+    private var isRepeatable = false
 
 
     private var heightOfAnimation = 0.0
@@ -31,6 +32,11 @@ class BounceAnimation(private val view: View) {
 
     fun withDuration(duration: Int): BounceAnimation {
         this.duration = duration
+        return this
+    }
+
+    fun isRepeatable(r: Boolean): BounceAnimation {
+        this.isRepeatable = r
         return this
     }
 
@@ -98,6 +104,7 @@ class BounceAnimation(private val view: View) {
             }
         })
         valueAnimator.duration = duration.toLong()
+        if (isRepeatable) valueAnimator.repeatCount = ValueAnimator.INFINITE
         valueAnimator.start()
     }
 

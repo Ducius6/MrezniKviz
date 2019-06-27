@@ -65,6 +65,8 @@ class WaitingFriendsActivity : AppCompatActivity() {
             createNewQuizzButton.alpha = 0.5f
             startActivity(Intent(this, QuestionActivity::class.java).putExtra("questions", quiz))
         }.enableOnTouchDemand()
+
+        editTextQuizTitle.setOnClickListener { startActivity(Intent(this, WaitFromNotificationActivity::class.java)) }
     }
 
     fun addToList(user: FBUser) {
