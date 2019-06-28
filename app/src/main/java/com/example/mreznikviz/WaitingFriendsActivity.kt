@@ -86,7 +86,7 @@ class WaitingFriendsActivity : AppCompatActivity() {
             FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/start").setValue(viewAdapter.itemCount + 1)
             startActivity(Intent(this, QuestionActivity::class.java)
                 .putExtra("questions", quiz)
-                .putExtra("nop", viewAdapter.itemCount + 1))
+                .putExtra("nop", (viewAdapter.itemCount + 1).toLong()))
         }.enableOnTouchDemand()
 
     }
