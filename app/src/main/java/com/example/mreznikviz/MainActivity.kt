@@ -14,7 +14,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import com.example.mreznikviz.entities.User
 import com.example.mreznikviz.firebase.QuizFirebaseMessagingService.Companion.ACTION_RESPONSE
 import com.example.mreznikviz.usernet.UserRestFactory
@@ -57,16 +56,17 @@ class MainActivity : AppCompatActivity() {
                 val token = task.result?.token
                 FirebaseDatabase.getInstance().reference.child("tokens").child(user!!.userName).setValue(token)
 
-
-                // Log and toast
-                Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
                 Log.e("token", token)
             })
 
         if (intent.extras != null) {
             val message = intent.extras?.getString("message")
-            //pushmessage.text = message
-
+            val quizId = intent.extras?.getString("quizId")
+            if(message!=null){
+                intent = Intent(this@MainActivity, WaitFromNotificationActivity::class.java)
+                intent.putExtra("id", quizId)
+                startActivity(intent)
+            }
         }
 
         Thread{
@@ -114,7 +114,6 @@ class MainActivity : AppCompatActivity() {
 
     inner class MessageBroadCastReceiver: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            Toast.makeText(this@MainActivity, intent?.getStringExtra("message"), Toast.LENGTH_LONG).show()
             quizId = intent?.getStringExtra("quizId")
             val dialog = JoinDialog(this@MainActivity)
             dialog.show()
