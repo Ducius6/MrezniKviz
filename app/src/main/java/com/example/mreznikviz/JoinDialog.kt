@@ -1,10 +1,14 @@
 package com.example.mreznikviz
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.ContextWrapper
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+
+
 
 class JoinDialog(context: Context) : Dialog(context), View.OnClickListener {
     var join: TextView? = null
@@ -13,7 +17,7 @@ class JoinDialog(context: Context) : Dialog(context), View.OnClickListener {
 
     override fun onClick(v: View) {
         if(v.id == R.id.joinButtonDialog){
-            (context as MainActivity).doJoin()
+            (scanForActivity(context) as MainActivity).doJoin()
         }
         dismiss()
     }
@@ -25,6 +29,17 @@ class JoinDialog(context: Context) : Dialog(context), View.OnClickListener {
         cancel = findViewById(R.id.cancelButtonDialog)
         join?.setOnClickListener(this)
         cancel?.setOnClickListener(this)
+    }
+
+    private fun scanForActivity(cont: Context?): Activity? {
+        if (cont == null)
+            return null
+        else if (cont is Activity)
+            return cont
+        else if (cont is ContextWrapper)
+            return scanForActivity(cont.baseContext)
+
+        return null
     }
 
 }
