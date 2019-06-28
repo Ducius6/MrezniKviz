@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
     private var quizId: String? = null
+    private var receiver: MessageBroadCastReceiver? = null
 
     private var user: User? = null
 
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         val broadcastReceiverIntentFilter = IntentFilter(ACTION_RESPONSE).apply {
             addCategory(Intent.CATEGORY_DEFAULT)
         }
-        val receiver = MessageBroadCastReceiver()
+        receiver = MessageBroadCastReceiver()
         registerReceiver(receiver, broadcastReceiverIntentFilter)
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener(OnCompleteListener { task ->
@@ -88,6 +89,11 @@ class MainActivity : AppCompatActivity() {
         createNewQuizzButton.setOnClickListener {
             startActivity(Intent(this, CreateQuiz::class.java).putExtra("user", user))
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(receiver)
     }
 
     fun doJoin() {
