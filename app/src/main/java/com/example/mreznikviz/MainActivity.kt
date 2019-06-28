@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
             }
         }.start()
 
-        createNewQuizzButton.setOnClickListener {
+        createNewQuizButton.setOnClickListener {
             startActivity(Intent(this, CreateQuiz::class.java).putExtra("user", user))
         }
     }

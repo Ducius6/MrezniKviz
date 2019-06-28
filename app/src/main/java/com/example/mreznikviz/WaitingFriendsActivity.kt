@@ -28,8 +28,8 @@ class WaitingFriendsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_waiting_friends)
-        createNewQuizzButton.isEnabled = true
-        createNewQuizzButton.alpha = 0.5f
+        createNewQuizButton.isEnabled = true
+        createNewQuizButton.alpha = 0.5f
 
         val myDataSet: MutableList<FBUser> = mutableListOf()
         viewManager = LinearLayoutManager(this)
@@ -79,21 +79,21 @@ class WaitingFriendsActivity : AppCompatActivity() {
         }
 
         textViewNumberOfFriends.text = myDataSet.size.toString()
-        BounceAnimation(createNewQuizzButton).withAmplitude(0.4).addOnFinishListener {
+        BounceAnimation(createNewQuizButton).withAmplitude(0.4).addOnFinishListener {
             reference.child("quiz/" + quiz.id).removeEventListener(childEventListener)
-            createNewQuizzButton.isEnabled = true
-            createNewQuizzButton.alpha = 0.5f
+            createNewQuizButton.isEnabled = true
+            createNewQuizButton.alpha = 0.5f
             FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/start").setValue(viewAdapter.itemCount + 1)
             startActivity(Intent(this, QuestionActivity::class.java)
                 .putExtra("questions", quiz)
-                .putExtra("nop", viewAdapter.itemCount + 1))
+                .putExtra("nop", (viewAdapter.itemCount + 1).toLong()))
         }.enableOnTouchDemand()
 
     }
 
     fun addToList(user: FBUser) {
-        createNewQuizzButton.isEnabled = true
-        createNewQuizzButton.alpha = 1f
+        createNewQuizButton.isEnabled = true
+        createNewQuizButton.alpha = 1f
         textViewNumberOfFriends.text = (textViewNumberOfFriends.text.toString().toInt() + 1).toString()
         BounceAnimation(textViewNumberOfFriends).executeSingleEvent()
         viewAdapter.list.add(0, user)
@@ -102,8 +102,8 @@ class WaitingFriendsActivity : AppCompatActivity() {
 
     fun removeFromList(user: FBUser) {
         if (viewAdapter.list.size <= 1) {
-            createNewQuizzButton.isEnabled = true
-            createNewQuizzButton.alpha = 0.5f
+            createNewQuizButton.isEnabled = true
+            createNewQuizButton.alpha = 0.5f
         }
         textViewNumberOfFriends.text = (textViewNumberOfFriends.text.toString().toInt() - 1).toString()
         BounceAnimation(textViewNumberOfFriends).withAmplitude(-0.5).executeSingleEvent()

@@ -1,10 +1,12 @@
 package com.example.mreznikviz
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_final.*
 
 class FinalActivity : AppCompatActivity() {
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_final)
@@ -27,6 +30,8 @@ class FinalActivity : AppCompatActivity() {
         val quiz = intent.getSerializableExtra("quiz") as Quizz
         val nop = intent.getLongExtra("nop", 0L)
 
+        Log.d("NOP", nop.toString())
+
         val viewManager = LinearLayoutManager(this)
         val viewAdapter = MyAdapterFinal(mutableListOf(), mutableListOf())
         recyclerViewLeaderBoard.apply {
@@ -35,6 +40,10 @@ class FinalActivity : AppCompatActivity() {
             adapter = viewAdapter
         }
 
+        textView.text = "Leaderboard - " + quiz.admin + "'s Quiz"
+        createNewQuizButton.isEnabled = false
+        createNewQuizButton.alpha = 0.4f
+
         FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id +"/leaderboard/$myUsername").setValue(myScore)
 
         //TODO trenutno prikazi neki loading dok ne rjese svi
@@ -42,6 +51,7 @@ class FinalActivity : AppCompatActivity() {
         val listener = object : ValueEventListener {
             override fun onDataChange(ds: DataSnapshot) {
                 if (ds.childrenCount == nop) {
+                    Log.d("NOP2", "USLO")
                     //TODO makni loading
                     var i = 0
                     for (d in ds.children.sortedBy { it.getValue(Int::class.java) }) {
@@ -49,10 +59,17 @@ class FinalActivity : AppCompatActivity() {
                         viewAdapter.scores.add(i, d.getValue(Int::class.java)!!)
                         i += 1
                     }
+                    viewAdapter.notifyDataSetChanged()
                 }
+                createNewQuizButton.isEnabled = true
+                createNewQuizButton.alpha = 1f
+
             }
             override fun onCancelled(p0: DatabaseError) {}
         }
+        FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id +"/leaderboard").addValueEventListener(listener)
+
+        createNewQuizButton.setOnClickListener { startActivity(Intent(this, MainActivity::class.java).putExtra("user", MainActivity.getUser())) }
     }
 }
 
