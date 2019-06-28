@@ -12,7 +12,7 @@ class JoinDialog(context: Context) : Dialog(context), View.OnClickListener {
 
     override fun onClick(v: View) {
         if(v.id == R.id.joinButtonDialog){
-            (ownerActivity as MainActivity).doJoin()
+            (context as MainActivity).doJoin()
         }
         dismiss()
     }
