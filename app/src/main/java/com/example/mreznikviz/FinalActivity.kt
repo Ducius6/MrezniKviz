@@ -1,6 +1,7 @@
 package com.example.mreznikviz
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_final.*
 
 class FinalActivity : AppCompatActivity() {
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_final)
@@ -35,6 +37,9 @@ class FinalActivity : AppCompatActivity() {
             adapter = viewAdapter
         }
 
+        textView.text = "Leaderboard - " + quiz.admin + "'s Quiz"
+        createNewQuizButton.isEnabled = false
+
         FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id +"/leaderboard/$myUsername").setValue(myScore)
 
         //TODO trenutno prikazi neki loading dok ne rjese svi
@@ -50,9 +55,13 @@ class FinalActivity : AppCompatActivity() {
                         i += 1
                     }
                 }
+                createNewQuizButton.isEnabled = true
             }
             override fun onCancelled(p0: DatabaseError) {}
         }
+        FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id +"/leaderboard").addValueEventListener(listener)
+
+        createNewQuizButton.setOnClickListener { startActivity(Intent(this, MainActivity::class.java).putExtra("user", MainActivity.getUser())) }
     }
 }
 
