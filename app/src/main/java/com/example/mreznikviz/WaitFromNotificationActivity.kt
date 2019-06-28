@@ -35,12 +35,14 @@ class WaitFromNotificationActivity : AppCompatActivity() {
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
+                    val nop = dataSnapshot.getValue(Long::class.java)
                     val listener2 = object : ValueEventListener {
                         override fun onDataChange(ds: DataSnapshot) {
                             val questions = mutableListOf<Question>()
                             ds.children.forEach{questions.add(readQuestion(it))}
                             startActivity(Intent(this@WaitFromNotificationActivity, QuestionActivity::class.java)
-                                .putExtra("quiz", Quizz(quizId, listOf(), questions, admin, "")))
+                                .putExtra("questions", Quizz(quizId, listOf(), questions, admin, ""))
+                                .putExtra("nop", nop))
                             finish()
                         }
                         override fun onCancelled(p0: DatabaseError) {}

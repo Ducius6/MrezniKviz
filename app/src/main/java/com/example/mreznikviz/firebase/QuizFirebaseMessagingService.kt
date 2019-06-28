@@ -26,6 +26,7 @@ class QuizFirebaseMessagingService : FirebaseMessagingService() {
             addCategory(Intent.CATEGORY_DEFAULT)
         }
         broadCastIntent.putExtra("message", remoteMessage.data?.get("message"))
+        broadCastIntent.putExtra("quizId", remoteMessage.data?.get("quizId"))
         sendBroadcast(broadCastIntent)
     }
 
