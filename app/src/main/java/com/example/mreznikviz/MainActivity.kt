@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         val listener = object : ValueEventListener {
             override fun onDataChange(ds: DataSnapshot) {
                 startActivity(Intent(this@MainActivity, WaitFromNotificationActivity::class.java)
-                    .putExtra("id", ds.child("id").getValue(String::class.java))
+                    .putExtra("theme", ds.child("theme").getValue(String::class.java))
                     .putExtra("admin", ds.child("admin").getValue(String::class.java))
                     .putExtra("id", quizId))
             }
