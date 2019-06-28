@@ -83,10 +83,10 @@ class WaitingFriendsActivity : AppCompatActivity() {
             reference.child("quiz/" + quiz.id).removeEventListener(childEventListener)
             createNewQuizzButton.isEnabled = true
             createNewQuizzButton.alpha = 0.5f
-            FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/start").setValue(viewAdapter.itemCount)
+            FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/start").setValue(viewAdapter.itemCount + 1)
             startActivity(Intent(this, QuestionActivity::class.java)
                 .putExtra("questions", quiz)
-                .putExtra("nop", viewAdapter.itemCount))
+                .putExtra("nop", viewAdapter.itemCount + 1))
         }.enableOnTouchDemand()
 
     }
