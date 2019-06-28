@@ -1,10 +1,8 @@
 package com.example.mreznikviz
 
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -12,7 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.mreznikviz.entities.User
 import com.example.mreznikviz.usernet.UserRestFactory
-import com.google.firebase.database.FirebaseDatabase
 
 class Login : AppCompatActivity() {
     var passwordInput: EditText? = null
@@ -34,7 +31,18 @@ class Login : AppCompatActivity() {
         userNameInput = findViewById(R.id.editTextUsernameLogin)
         loginButton = findViewById(R.id.loginButton)
         warningLogin = findViewById(R.id.warningLogin)
-        createAccountButton = findViewById(R.id.createAccountButton);
+        createAccountButton = findViewById(R.id.createAccountButton)
+
+        val launchIntent = Intent(this@Login, MainActivity::class.java)
+
+        if (intent.extras != null) {
+            val message = intent.extras?.getString("message")
+            val quizId = intent.extras?.getString("quizId")
+            if(message!=null){
+                println("quiz id " + quizId)
+                launchIntent.putExtra("quizId", quizId)
+            }
+        }
 
         loginButton?.setOnClickListener {
             if(passwordInput?.text.toString().isEmpty() || userNameInput?.text.toString().isEmpty()){
@@ -45,9 +53,8 @@ class Login : AppCompatActivity() {
                     val rest = UserRestFactory.instance
                     try{
                         val user:User? = rest.loginUser( userNameInput?.text.toString(), passwordInput?.text.toString())
-                        val intent = Intent(this@Login, MainActivity::class.java)
-                        intent.putExtra("user",user)
-                        startActivity(intent)
+                        launchIntent.putExtra("user",user)
+                        startActivity(launchIntent)
 
                     }catch (ex:Exception){
                         ex.printStackTrace()
