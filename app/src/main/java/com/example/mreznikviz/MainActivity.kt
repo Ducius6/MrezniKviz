@@ -18,6 +18,7 @@ import com.example.mreznikviz.entities.User
 import com.example.mreznikviz.firebase.QuizFirebaseMessagingService.Companion.ACTION_RESPONSE
 import com.example.mreznikviz.usernet.UserRestFactory
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -36,6 +37,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        FirebaseApp.initializeApp(this)
 
         user = intent.getSerializableExtra("user") as User
         dohvat.user = user;

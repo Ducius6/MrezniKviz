@@ -41,7 +41,6 @@ class CreateQuiz : AppCompatActivity() {
         supportActionBar?.setBackgroundDrawable( ColorDrawable(resources.getColor(R.color.colorPrimaryDark)))
         supportActionBar?.title = "QuizApp"
 
-
         user = intent.getSerializableExtra("user") as User
 
 
