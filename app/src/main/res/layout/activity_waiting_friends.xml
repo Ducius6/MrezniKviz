@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_background"
             android:textColor="@color/white"
-            android:id="@+id/createNewQuizzButton" app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/createNewQuizButton" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="32dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="32dp" android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -49,7 +49,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewNumberOfFriends"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="24dp"
-            app:layout_constraintBottom_toTopOf="@+id/createNewQuizzButton" android:id="@+id/recyclerVeiwReadyFriends"/>
+            app:layout_constraintBottom_toTopOf="@+id/finishButton" android:id="@+id/recyclerVeiwReadyFriends"/>
     <TextView
             android:text="Invites have been sent to selected users"
             android:layout_width="0dp"
