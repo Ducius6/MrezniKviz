@@ -16,7 +16,6 @@ import com.example.mreznikviz.entities.Quizz
 import com.example.mreznikviz.usernet.UserRestFactory
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_waiting_friends.*
-import kotlinx.android.synthetic.main.activity_waiting_friends.createNewQuizzButton
 
 
 class WaitingFriendsActivity : AppCompatActivity() {
@@ -44,7 +43,7 @@ class WaitingFriendsActivity : AppCompatActivity() {
                     val token = dataSnapshot.value.toString()
                     Thread{
                         val rest = UserRestFactory.instance
-                        rest.sendNotification(token,"lala")
+                        rest.sendNotification(token,quiz.id)
                     }.start()
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
