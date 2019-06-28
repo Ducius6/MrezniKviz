@@ -4,15 +4,16 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
+import android.widget.TextView
 
 class JoinDialog(context: Context) : Dialog(context), View.OnClickListener {
-    var join: Button? = null
-    var cancel: Button? = null
+    var join: TextView? = null
+    var cancel: TextView? = null
+
 
     override fun onClick(v: View) {
         if(v.id == R.id.joinButtonDialog){
-            (ownerActivity as MainActivity).doJoin()
+            (context as MainActivity).doJoin()
         }
         dismiss()
     }
