@@ -61,7 +61,7 @@ class QuestionActivity : AppCompatActivity() {
 
         textViewQuestion = this.findViewById(R.id.textViewQuestion)
 
-        counter = QuestionCounter(progressBar!!, textViewQuestion!!, category, nextButton, listOfTabs, editText)
+        counter = QuestionCounter(progressBar!!, textViewQuestion!!, category, nextButton, listOfTabs, editText, this)
 
         Thread(Runnable {
             for ( i in 0..3){
