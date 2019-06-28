@@ -60,9 +60,9 @@ class FinalActivity : AppCompatActivity() {
                         i += 1
                     }
                     viewAdapter.notifyDataSetChanged()
+                    createNewQuizButton.isEnabled = true
+                    createNewQuizButton.alpha = 1f
                 }
-                createNewQuizButton.isEnabled = true
-                createNewQuizButton.alpha = 1f
 
             }
             override fun onCancelled(p0: DatabaseError) {}
