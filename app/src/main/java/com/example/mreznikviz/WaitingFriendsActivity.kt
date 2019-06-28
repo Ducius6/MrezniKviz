@@ -64,9 +64,9 @@ class WaitingFriendsActivity : AppCompatActivity() {
 
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                addToList(p0.getValue(FBUser::class.java)!!) }
+                addToList(FBUser(p0.key!!)) }
             override fun onChildRemoved(p0: DataSnapshot) {
-                removeFromList(p0.getValue(FBUser::class.java)!!) }
+                removeFromList(FBUser(p0.key!!)) }
             override fun onCancelled(p0: DatabaseError) {}
             override fun onChildMoved(p0: DataSnapshot, p1: String?) {}
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {}
@@ -84,8 +84,10 @@ class WaitingFriendsActivity : AppCompatActivity() {
             reference.child("quiz/" + quiz.id).removeEventListener(childEventListener)
             createNewQuizzButton.isEnabled = true
             createNewQuizzButton.alpha = 0.5f
-            FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/start").setValue(true)
-            startActivity(Intent(this, QuestionActivity::class.java).putExtra("questions", quiz))
+            FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/start").setValue(viewAdapter.itemCount)
+            startActivity(Intent(this, QuestionActivity::class.java)
+                .putExtra("questions", quiz)
+                .putExtra("nop", viewAdapter.itemCount))
         }.enableOnTouchDemand()
 
     }

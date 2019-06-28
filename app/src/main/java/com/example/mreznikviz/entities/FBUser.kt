@@ -14,4 +14,8 @@ class FBUser(val userName: String) : Serializable {
     override fun hashCode(): Int {
         return userName.hashCode() ?: 0
     }
+
+    fun toUser(): User {
+        return User("", userName, "", "", 0)
+    }
 }
