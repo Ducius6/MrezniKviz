@@ -22,7 +22,7 @@ class WaitFromNotificationActivity : AppCompatActivity() {
 
         val admin = intent.getStringExtra("admin")
         val theme = intent.getStringExtra("theme")
-        val quizId = intent.getStringExtra("id")
+        val quizId = intent.getStringExtra("quizId")
 
         editTextQuizTitle.text = admin + "'s quiz"
         themeTextView.text = "Theme: " + theme

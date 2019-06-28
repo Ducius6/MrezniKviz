@@ -63,11 +63,10 @@ class MainActivity : AppCompatActivity() {
             })
 
         if (intent.extras != null) {
-            val message = intent.extras?.getString("message")
             val quizId = intent.extras?.getString("quizId")
-            if(message!=null){
+            if(quizId!=null){
                 intent = Intent(this@MainActivity, WaitFromNotificationActivity::class.java)
-                intent.putExtra("id", quizId)
+                intent.putExtra("quizId", quizId)
                 startActivity(intent)
             }
         }
