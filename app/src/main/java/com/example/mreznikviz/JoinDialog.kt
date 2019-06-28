@@ -10,9 +10,11 @@ class JoinDialog(context: Context) : Dialog(context), View.OnClickListener {
     var join: Button? = null
     var cancel: Button? = null
 
+
+
     override fun onClick(v: View) {
         if(v.id == R.id.joinButtonDialog){
-            (context as MainActivity).doJoin()
+            (ownerActivity as MainActivity).doJoin()
         }
         dismiss()
     }
