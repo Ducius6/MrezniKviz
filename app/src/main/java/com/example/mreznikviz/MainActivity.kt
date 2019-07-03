@@ -65,9 +65,16 @@ class MainActivity : AppCompatActivity() {
         if (intent.extras != null) {
             val quizId = intent.extras?.getString("quizId")
             if(quizId!=null){
-                intent = Intent(this@MainActivity, WaitFromNotificationActivity::class.java)
-                intent.putExtra("quizId", quizId)
-                startActivity(intent)
+                val listener = object : ValueEventListener {
+                    override fun onDataChange(ds: DataSnapshot) {
+                        startActivity(Intent(this@MainActivity, WaitFromNotificationActivity::class.java)
+                            .putExtra("theme", ds.child("theme").getValue(String::class.java))
+                            .putExtra("admin", ds.child("admin").getValue(String::class.java))
+                            .putExtra("quizId", quizId))
+                    }
+                    override fun onCancelled(p0: DatabaseError) {}
+                }
+                FirebaseDatabase.getInstance().reference.child("quiz/$quizId/info").addListenerForSingleValueEvent(listener)
             }
         }
 
@@ -102,7 +109,7 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onCancelled(p0: DatabaseError) {}
         }
-        FirebaseDatabase.getInstance().reference.child("quiz/$quizId/info").addValueEventListener(listener)
+        FirebaseDatabase.getInstance().reference.child("quiz/$quizId/info").addListenerForSingleValueEvent(listener)
     }
 
     companion object dohvat{
