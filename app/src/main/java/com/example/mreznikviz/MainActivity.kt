@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this@MainActivity, WaitFromNotificationActivity::class.java)
                     .putExtra("theme", ds.child("theme").getValue(String::class.java))
                     .putExtra("admin", ds.child("admin").getValue(String::class.java))
-                    .putExtra("id", quizId))
+                    .putExtra("quizId", quizId))
             }
             override fun onCancelled(p0: DatabaseError) {}
         }
