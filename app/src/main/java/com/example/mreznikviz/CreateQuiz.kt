@@ -74,7 +74,7 @@ class CreateQuiz : AppCompatActivity() {
         val items = arrayOf(Categories.POP_MUSIC, Categories.FOUR_LETTER_WORDS, Categories.SCIENCE)
         val filterAdapter = ArrayAdapter(this, R.layout.spinner_item, items)
         spinner.adapter = filterAdapter
-        
+
 
         startNewQuiz.setOnClickListener {
             startNewQuiz.isEnabled = false
