@@ -59,7 +59,7 @@ class FinalActivity : AppCompatActivity() {
                         viewAdapter.userNames.add(i, d.key!!)
                         viewAdapter.scores.add(i, d.getValue(Int::class.java)!!)
                         i += 1
-                        if (MainActivity.getUser()?.userName.equals(d.key) && nop > 1) {
+                        if (MainActivity.getUser()?.userName.equals(d.key)) {
                             Thread {
                                 Log.d("BROJ BODOVA", d.getValue(Int::class.java)!!.toString())
                                 UserRestFactory.instance.updateUser(d.getValue(Int::class.java)!!.toLong(), d.key!!)
