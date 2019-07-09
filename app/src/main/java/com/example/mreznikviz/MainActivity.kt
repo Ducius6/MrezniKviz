@@ -116,8 +116,8 @@ class MainActivity : AppCompatActivity() {
 
         private var user: User? = null
 
-        fun getUser(): User{
-            return user!!
+        fun getUser(): User? {
+            return user
         }
     }
 

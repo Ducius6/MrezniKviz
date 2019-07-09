@@ -10,9 +10,7 @@ import android.widget.TextView
 import com.example.mreznikviz.animations.BounceAnimation
 import com.example.mreznikviz.constants.QuizzConstants
 import com.example.mreznikviz.entities.Quizz
-import java.security.AccessControlContext
 import java.util.*
-import kotlin.math.round
 
 class QuestionCounter(val progressBar: ProgressBar, val textViewQuestion: TextView, val category: Quizz, val button: RelativeLayout, val listOfTabs: ArrayList<RelativeLayout>, val editText: EditText, val context: Activity): AsyncTask<Void?, Double?, Void?>(){
     var time: Double = 0.0
@@ -62,16 +60,26 @@ class QuestionCounter(val progressBar: ProgressBar, val textViewQuestion: TextVi
     }
 
     override fun onPostExecute(result: Void?) {
-        val brojBodova = 0
+        var brojBodova = 0
         for (i in 1..QuizzConstants.STANDARD_QUESTION_NUMBER) {
-            if (listAnswers[i - 1])
-                brojBodova.plus(30 - listTimes[i - 1])
+            println("odgovor " + i)
+            if (listAnswers[i - 1]) {
+                println("tocan odgovor " + i)
+                println("vrijeme " + listTimes[i-1])
+                brojBodova = brojBodova.plus(30 - listTimes[i - 1])
+                println()
+            }
         }
-        context.startActivity(Intent(context, FinalActivity::class.java)
-            .putExtra("quiz", category)
-            .putExtra("score", brojBodova)
-            .putExtra("userName", MainActivity.getUser().userName)
-            .putExtra("nop", context.intent.getLongExtra("nop", 0L)))
+        println("score $brojBodova")
+        if(MainActivity.getUser()!=null) {
+            context.startActivity(
+                Intent(context, FinalActivity::class.java)
+                    .putExtra("quiz", category)
+                    .putExtra("score", brojBodova)
+                    .putExtra("userName", MainActivity.getUser()!!.userName)
+                    .putExtra("nop", context.intent.getLongExtra("nop", 0L))
+            )
+        }
 
     }
 

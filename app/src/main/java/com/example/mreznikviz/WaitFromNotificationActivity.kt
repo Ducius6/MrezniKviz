@@ -27,8 +27,10 @@ class WaitFromNotificationActivity : AppCompatActivity() {
         editTextQuizTitle.text = admin + "'s quiz"
         themeTextView.text = "Theme: " + theme
 
-        FirebaseDatabase.getInstance().reference.child("quiz/$quizId/members/" + MainActivity.getUser().userName).setValue(true)
-
+        if(MainActivity.getUser()!=null) {
+            FirebaseDatabase.getInstance().reference.child("quiz/$quizId/members/" + MainActivity.getUser()!!.userName)
+                .setValue(true)
+        }
         BounceAnimation(circleSmaller).withDuration(3300).isRepeatable(true).withAmplitude(0.5).executeSingleEvent()
         BounceAnimation(circleBigger).withDuration(3300).isRepeatable(true).withAmplitude(0.85).withDelay(450).executeSingleEvent()
 

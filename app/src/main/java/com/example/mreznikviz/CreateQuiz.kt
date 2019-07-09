@@ -2,25 +2,26 @@ package com.example.mreznikviz
 
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.TextView
 import com.example.mreznikviz.animations.BounceAnimation
 import com.example.mreznikviz.constants.Categories
-import com.example.mreznikviz.entities.*
+import com.example.mreznikviz.entities.Question
+import com.example.mreznikviz.entities.Quizz
+import com.example.mreznikviz.entities.User
 import com.example.mreznikviz.quiznet.RestFactory
 import com.example.mreznikviz.usernet.UserRestFactory
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_invite_people.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.layout_leader_board_element.view.*
 import kotlin.random.Random
 
 class CreateQuiz : AppCompatActivity() {
@@ -73,11 +74,7 @@ class CreateQuiz : AppCompatActivity() {
         val items = arrayOf(Categories.POP_MUSIC, Categories.FOUR_LETTER_WORDS, Categories.SCIENCE)
         val filterAdapter = ArrayAdapter(this, R.layout.spinner_item, items)
         spinner.adapter = filterAdapter
-
-
-
-
-
+        
 
         startNewQuiz.setOnClickListener {
             startNewQuiz.isEnabled = false
