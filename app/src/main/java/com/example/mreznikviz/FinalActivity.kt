@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.mreznikviz.entities.Quizz
+import com.example.mreznikviz.usernet.UserRestFactory
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -58,6 +59,12 @@ class FinalActivity : AppCompatActivity() {
                         viewAdapter.userNames.add(i, d.key!!)
                         viewAdapter.scores.add(i, d.getValue(Int::class.java)!!)
                         i += 1
+                        if (MainActivity.getUser()?.userName.equals(d.key) && nop > 1) {
+                            Thread {
+                                Log.d("BROJ BODOVA", d.getValue(Int::class.java)!!.toString())
+                                UserRestFactory.instance.updateUser(d.getValue(Int::class.java)!!.toLong(), d.key!!)
+                            }.start()
+                        }
                     }
                     viewAdapter.notifyDataSetChanged()
                     createNewQuizButton.isEnabled = true
