@@ -55,7 +55,7 @@ class FinalActivity : AppCompatActivity() {
                     Log.d("NOP2", "USLO")
                     //TODO makni loading
                     var i = 0
-                    for (d in ds.children.sortedBy { it.getValue(Int::class.java) }) {
+                    for (d in ds.children.sortedBy { it.getValue(Int::class.java) }.reversed()) {
                         viewAdapter.userNames.add(i, d.key!!)
                         viewAdapter.scores.add(i, d.getValue(Int::class.java)!!)
                         i += 1
