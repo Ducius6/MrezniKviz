@@ -28,7 +28,7 @@ class WaitingFriendsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_waiting_friends)
-        createNewQuizButton.isEnabled = true
+        createNewQuizButton.isEnabled = false
         createNewQuizButton.alpha = 0.5f
 
         val myDataSet: MutableList<FBUser> = mutableListOf()

@@ -14,7 +14,7 @@ class RestRetrofit : RestInterface {
     val service : RestService
 
     init {
-        val baseURL = "http://" + RestFactory.BASE_IP
+        val baseURL = "http://" + RestFactory.BASE_IP_QUIZ
         val retrofit = RestAdapter.Builder()
             .setEndpoint(baseURL)
             .build()
