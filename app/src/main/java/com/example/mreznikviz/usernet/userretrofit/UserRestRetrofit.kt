@@ -12,7 +12,7 @@ class UserRestRetrofit:UserRestInterface {
 
 
     init {
-        val baseUrl = "http://" + UserRestFactory.BASE_IP + ":8080/"
+        val baseUrl = UserRestFactory.BASE_IP
         val retrofit = RestAdapter.Builder()
             .setEndpoint(baseUrl)
             .build()
