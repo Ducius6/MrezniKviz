@@ -34,7 +34,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="New Quizz"
+            android:text="New Quiz"
             android:textColor="@color/primaryHighlight"
             android:textSize="35dp"
             android:textStyle="bold"
