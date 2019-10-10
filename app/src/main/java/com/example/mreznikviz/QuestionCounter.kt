@@ -12,7 +12,15 @@ import com.example.mreznikviz.constants.QuizzConstants
 import com.example.mreznikviz.entities.Quizz
 import java.util.*
 
-class QuestionCounter(val progressBar: ProgressBar, val textViewQuestion: TextView, val category: Quizz, val button: RelativeLayout, val listOfTabs: ArrayList<RelativeLayout>, val editText: EditText, val context: Activity): AsyncTask<Void?, Double?, Void?>(){
+class QuestionCounter(
+    val progressBar: ProgressBar,
+    val textViewQuestion: TextView,
+    val category: Quizz,
+    val button: RelativeLayout,
+    val listOfTabs: ArrayList<RelativeLayout>,
+    val editText: EditText,
+    val context: Activity
+) : AsyncTask<Void?, Double?, Void?>() {
     var time: Double = 0.0
     var index: Int = 1
 
@@ -20,9 +28,11 @@ class QuestionCounter(val progressBar: ProgressBar, val textViewQuestion: TextVi
     var listTimes = arrayListOf(0, 0, 0, 0, 0)
 
     override fun onPreExecute() {
-        textViewQuestion.text =  category.questions[0].question
+        textViewQuestion.text = category.questions[0].question
         val bounceAnimation = BounceAnimation(button)
-        bounceAnimation.addOnFinishListener{listTimes[index - 1] = time.toInt(); time = QuizzConstants.STANDARD_QUESTION_TIME}.enableOnTouchDemand()
+        bounceAnimation.addOnFinishListener {
+            listTimes[index - 1] = time.toInt(); time = QuizzConstants.STANDARD_QUESTION_TIME
+        }.enableOnTouchDemand()
     }
 
     override fun doInBackground(vararg params: Void?): Void? {
@@ -35,11 +45,10 @@ class QuestionCounter(val progressBar: ProgressBar, val textViewQuestion: TextVi
                 time = time.plus((QuizzConstants.STANDARD_TIME_STEP.toFloat()) / 1000)
                 publishProgress(time)
             }
-            if(index!=QuizzConstants.STANDARD_QUESTION_NUMBER) {
+            if (index != QuizzConstants.STANDARD_QUESTION_NUMBER) {
                 time = 0.0
                 progressBar.progress = 0
-            }
-            else{
+            } else {
                 evaluateQuestion(index)
                 break
             }
@@ -49,7 +58,7 @@ class QuestionCounter(val progressBar: ProgressBar, val textViewQuestion: TextVi
 
     override fun onProgressUpdate(vararg values: Double?) {
         for (value in values) {
-            if(value!! > QuizzConstants.STANDARD_QUESTION_TIME && index<QuizzConstants.STANDARD_QUESTION_NUMBER) {
+            if (value!! > QuizzConstants.STANDARD_QUESTION_TIME && index < QuizzConstants.STANDARD_QUESTION_NUMBER) {
                 textViewQuestion.text = category.questions[index].question
                 evaluateQuestion(index)
                 markQuestion(index)
@@ -65,13 +74,13 @@ class QuestionCounter(val progressBar: ProgressBar, val textViewQuestion: TextVi
             println("odgovor " + i)
             if (listAnswers[i - 1]) {
                 println("tocan odgovor " + i)
-                println("vrijeme " + listTimes[i-1])
+                println("vrijeme " + listTimes[i - 1])
                 brojBodova = brojBodova.plus(30 - listTimes[i - 1])
                 println()
             }
         }
         println("score $brojBodova")
-        if(MainActivity.getUser()!=null) {
+        if (MainActivity.getUser() != null) {
             context.startActivity(
                 Intent(context, FinalActivity::class.java)
                     .putExtra("quiz", category)
@@ -83,17 +92,16 @@ class QuestionCounter(val progressBar: ProgressBar, val textViewQuestion: TextVi
 
     }
 
-    private fun evaluateQuestion(index: Int){
-        if(category.questions[index-1].answer.toLowerCase() == editText.text.toString().toLowerCase()){
-            listOfTabs[index-1].setBackgroundResource(R.drawable.background_green)
+    private fun evaluateQuestion(index: Int) {
+        if (category.questions[index - 1].answer.toLowerCase() == editText.text.toString().toLowerCase()) {
+            listOfTabs[index - 1].setBackgroundResource(R.drawable.background_green)
             listAnswers[index - 1] = true
-        }
-        else{
-            listOfTabs[index-1].setBackgroundResource(R.drawable.background_red)
+        } else {
+            listOfTabs[index - 1].setBackgroundResource(R.drawable.background_red)
         }
     }
 
-    private fun markQuestion(index: Int){
+    private fun markQuestion(index: Int) {
         editText.text.clear()
         listOfTabs[index].alpha = 1f
     }

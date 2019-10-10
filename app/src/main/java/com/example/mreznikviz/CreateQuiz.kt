@@ -26,7 +26,7 @@ import kotlin.random.Random
 
 class CreateQuiz : AppCompatActivity() {
     private lateinit var recyclerViewAll: RecyclerView
-    private lateinit var recyclerViewSelected : RecyclerView
+    private lateinit var recyclerViewSelected: RecyclerView
     private lateinit var viewManager1: RecyclerView.LayoutManager
     private lateinit var viewManager2: RecyclerView.LayoutManager
     private lateinit var selectedAdapter: MyAdapterSelected
@@ -39,7 +39,7 @@ class CreateQuiz : AppCompatActivity() {
         setContentView(R.layout.activity_invite_people)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setBackgroundDrawable( ColorDrawable(resources.getColor(R.color.colorPrimaryDark)))
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorPrimaryDark)))
         supportActionBar?.title = "QuizApp"
 
         user = intent.getSerializableExtra("user") as User
@@ -53,7 +53,7 @@ class CreateQuiz : AppCompatActivity() {
         recyclerViewSelected = findViewById(R.id.addedPeopleRecyclerView)
 
         selectedAdapter = MyAdapterSelected(mutableListOf())
-        allAdapter = MyAdapterAll(mutableListOf(User("","Load more", "", "", 0)), this, user)
+        allAdapter = MyAdapterAll(mutableListOf(User("", "Load more", "", "", 0)), this, user)
 
         selectedAdapter.allAdapter = allAdapter
         allAdapter.selectedAdapter = selectedAdapter
@@ -89,10 +89,6 @@ class CreateQuiz : AppCompatActivity() {
     }
 
 
-
-
-
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()
@@ -100,7 +96,7 @@ class CreateQuiz : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun createQuiz(listOfUsers : List<User>) : Quizz {
+    private fun createQuiz(listOfUsers: List<User>): Quizz {
         val jsonCategory = RestFactory.instance.getQuizzQuestions((spinner.selectedItem as Categories).id)
         val key = FirebaseDatabase.getInstance().reference.child("quiz/").push().key
         val questions = mutableListOf<Question>()
@@ -117,7 +113,7 @@ class CreateQuiz : AppCompatActivity() {
 
 class MyAdapterSelected(var list: MutableList<User>) : RecyclerView.Adapter<MyAdapterSelected.MyInviteViewHolder>() {
 
-    var allAdapter : MyAdapterAll? = null
+    var allAdapter: MyAdapterAll? = null
 
     override fun onBindViewHolder(holder: MyAdapterSelected.MyInviteViewHolder, i: Int) {
         val text = list[i].userName
@@ -149,7 +145,8 @@ class MyAdapterSelected(var list: MutableList<User>) : RecyclerView.Adapter<MyAd
     }
 }
 
-class MyAdapterAll(var list: MutableList<User>, val activity: CreateQuiz, val user : User) : RecyclerView.Adapter<MyAdapterAll.MyInviteViewHolder>() {
+class MyAdapterAll(var list: MutableList<User>, val activity: CreateQuiz, val user: User) :
+    RecyclerView.Adapter<MyAdapterAll.MyInviteViewHolder>() {
 
     var selectedAdapter: MyAdapterSelected? = null
     var count = 0
@@ -187,7 +184,7 @@ class MyAdapterAll(var list: MutableList<User>, val activity: CreateQuiz, val us
                         notifyDataSetChanged()
                     }
                 }.start()
-            } else  {
+            } else {
                 selectedAdapter!!.list.add(list[i])
                 selectedAdapter!!.notifyDataSetChanged()
                 list.removeAt(i)

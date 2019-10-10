@@ -2,8 +2,8 @@ package com.example.mreznikviz
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -45,7 +45,7 @@ class FinalActivity : AppCompatActivity() {
         createNewQuizButton.isEnabled = false
         createNewQuizButton.alpha = 0.4f
 
-        FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id +"/leaderboard/$myUsername").setValue(myScore)
+        FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/leaderboard/$myUsername").setValue(myScore)
 
         //TODO trenutno prikazi neki loading dok ne rjese svi
 
@@ -72,15 +72,25 @@ class FinalActivity : AppCompatActivity() {
                 }
 
             }
+
             override fun onCancelled(p0: DatabaseError) {}
         }
-        FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id +"/leaderboard").addValueEventListener(listener)
+        FirebaseDatabase.getInstance().reference.child("quiz/" + quiz.id + "/leaderboard")
+            .addValueEventListener(listener)
 
-        createNewQuizButton.setOnClickListener { startActivity(Intent(this, MainActivity::class.java).putExtra("user", MainActivity.getUser())) }
+        createNewQuizButton.setOnClickListener {
+            startActivity(
+                Intent(this, MainActivity::class.java).putExtra(
+                    "user",
+                    MainActivity.getUser()
+                )
+            )
+        }
     }
 }
 
-class MyAdapterFinal(var userNames: MutableList<String>, var scores: MutableList<Int>) : RecyclerView.Adapter<MyAdapterFinal.MyViewHolder>() {
+class MyAdapterFinal(var userNames: MutableList<String>, var scores: MutableList<Int>) :
+    RecyclerView.Adapter<MyAdapterFinal.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context)
