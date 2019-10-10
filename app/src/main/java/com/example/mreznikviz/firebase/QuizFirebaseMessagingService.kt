@@ -51,7 +51,7 @@ class QuizFirebaseMessagingService : FirebaseMessagingService() {
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setContentTitle(remoteMessage.notification!!.title)
             .setContentText(remoteMessage.notification!!.body)
-            .setSmallIcon(R.mipmap.ic_launcher_round)
+            .setSmallIcon(R.mipmap.quiz_icon_round)
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
