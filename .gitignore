@@ -7,8 +7,10 @@
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+/app/google-services.json
 .DS_Store
 /build
 /captures
+.idea
 .externalNativeBuild
-.mrezni-kviz-firebase-adminsdk-ykkx5-de6fe21a1a.json
+mrezni-kviz-firebase-adminsdk-ykkx5-de6fe21a1a.json
